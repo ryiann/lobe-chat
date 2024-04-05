@@ -1,5 +1,5 @@
 import { ActionIcon, DiscordIcon, Icon } from '@lobehub/ui';
-import { Badge, ConfigProvider, Dropdown, MenuProps } from 'antd';
+import { Badge, Dropdown, MenuProps } from 'antd';
 import {
   Book,
   Feather,
@@ -120,24 +120,14 @@ const BottomActions = memo<BottomActionProps>(({ tab }) => {
 
   return (
     <>
-      <Link aria-label={'GitHub'} href={GITHUB} target={'_blank'}>
+      <Link aria-label={'GitHub'} hidden={true} href={GITHUB} target={'_blank'}>
         <ActionIcon icon={Github} placement={'right'} title={'GitHub'} />
       </Link>
-      <Link aria-label={t('document')} href={DOCUMENTS} target={'_blank'}>
+      <Link aria-label={t('document')} hidden={true} href={DOCUMENTS} target={'_blank'}>
         <ActionIcon icon={Book} placement={'right'} title={t('document')} />
       </Link>
       <Dropdown arrow={false} menu={{ items }} trigger={['click']}>
-        {hasNewVersion ? (
-          <Flexbox>
-            <ConfigProvider theme={{ components: { Badge: { dotSize: 8 } } }}>
-              <Badge dot offset={[-4, 4]}>
-                <ActionIcon active={tab === SidebarTabKey.Setting} icon={Settings2} />
-              </Badge>
-            </ConfigProvider>
-          </Flexbox>
-        ) : (
-          <ActionIcon active={tab === SidebarTabKey.Setting} icon={Settings2} />
-        )}
+        <ActionIcon active={tab === SidebarTabKey.Setting} hidden={true} icon={Settings2} />
       </Dropdown>
     </>
   );
