@@ -14,13 +14,14 @@ const ShareAgentButton = memo<{ mobile?: boolean }>(({ mobile }) => {
 
   const buttonContent = mobile ? (
     <ActionIcon
+      hidden={true}
       icon={Rss}
       onClick={() => setIsModalOpen(true)}
       size={MOBILE_HEADER_ICON_SIZE}
       title={t('submitAgent')}
     />
   ) : (
-    <Button icon={<Icon icon={Rss} />} onClick={() => setIsModalOpen(true)}>
+    <Button hidden={true} icon={<Icon icon={Rss} />} onClick={() => setIsModalOpen(true)}>
       {t('submitAgent')}
     </Button>
   );
