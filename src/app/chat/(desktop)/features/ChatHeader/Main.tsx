@@ -1,20 +1,16 @@
 import { Avatar, ChatHeaderTitle } from '@lobehub/ui';
 import { Skeleton } from 'antd';
-import { useRouter } from 'next/navigation';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
 import { useSessionStore } from '@/store/session';
 import { agentSelectors, sessionSelectors } from '@/store/session/selectors';
-import { pathString } from '@/utils/url';
 
 import Tags from './Tags';
 
 const Main = memo(() => {
   const { t } = useTranslation('chat');
-
-  const router = useRouter();
 
   const [init, isInbox, title, description, avatar, backgroundColor] = useSessionStore((s) => [
     sessionSelectors.isSomeSessionActive(s),
@@ -42,11 +38,7 @@ const Main = memo(() => {
       <Avatar
         avatar={avatar}
         background={backgroundColor}
-        onClick={() =>
-          isInbox
-            ? router.push('/settings/agent')
-            : router.push(pathString('/chat/settings', { search: location.search }))
-        }
+        onClick={() => (isInbox ? null : null)}
         size={40}
         title={title}
       />
