@@ -1,6 +1,5 @@
 'use client';
 
-import { Logo } from '@lobehub/ui';
 import { PropsWithChildren, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
@@ -18,7 +17,12 @@ const Desktop = memo<PropsWithChildren>(({ children }) => {
       horizontal
       style={{ position: 'relative' }}
     >
-      <Logo className={styles.logo} size={36} type={'text'} />
+      <Center
+        className={styles.logo}
+        style={{ color: 'black', fontSize: '23px', fontWeight: 'bold' }}
+      >
+        {'ChatGPT'}
+      </Center>
       <Flexbox className={styles.view} flex={1}>
         {children}
       </Flexbox>
