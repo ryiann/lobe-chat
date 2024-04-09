@@ -2,6 +2,64 @@
 
 # Changelog
 
+## [Version 0.146.0](https://github.com/lobehub/lobe-chat/compare/v0.145.13...v0.146.0)
+
+<sup>Released on **2024-04-08**</sup>
+
+#### ✨ Features
+
+- **misc**: Add support for ZITADEL SSO provider.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add support for ZITADEL SSO provider, closes [#1904](https://github.com/lobehub/lobe-chat/issues/1904) ([44152f7](https://github.com/lobehub/lobe-chat/commit/44152f7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 0.145.13](https://github.com/lobehub/lobe-chat/compare/v0.145.12...v0.145.13)
+
+<sup>Released on **2024-04-07**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor the model settings for more clean code.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix normalize russian locale.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor the model settings for more clean code, closes [#1906](https://github.com/lobehub/lobe-chat/issues/1906) ([db5d3ac](https://github.com/lobehub/lobe-chat/commit/db5d3ac))
+
+#### What's fixed
+
+- **misc**: Fix normalize russian locale, closes [#1903](https://github.com/lobehub/lobe-chat/issues/1903) ([e86b596](https://github.com/lobehub/lobe-chat/commit/e86b596))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 0.145.12](https://github.com/lobehub/lobe-chat/compare/v0.145.11...v0.145.12)
 
 <sup>Released on **2024-04-04**</sup>
