@@ -18,7 +18,7 @@ const Header = memo(() => {
             <Center style={{ color: rgba(0, 0, 0, 0.12), fontSize: '23px', fontStyle: 'oblique' }}>
               /&nbsp;
             </Center>
-            <Center style={{ color: 'black', fontSize: '23px' }}>{'   Discover'}</Center>
+            <Center style={{ color: 'black', fontSize: '23px' }}>{'Discover'}</Center>
           </Flexbox>
         </Link>
       }
