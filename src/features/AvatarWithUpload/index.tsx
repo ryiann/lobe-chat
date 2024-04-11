@@ -1,4 +1,3 @@
-import { Upload } from 'antd';
 import { createStyles } from 'antd-style';
 import NextImage from 'next/image';
 import { CSSProperties, memo, useCallback } from 'react';
@@ -42,8 +41,7 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
       commonSelectors.userAvatar(s),
       s.updateAvatar,
     ]);
-
-    const handleUploadAvatar = useCallback(
+    useCallback(
       createUploadImageHandler((avatar) => {
         const img = new Image();
         img.src = avatar;
@@ -54,18 +52,15 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
       }),
       [],
     );
-
     return (
       <div className={styles} id={id} style={{ maxHeight: size, maxWidth: size, ...style }}>
-        <Upload beforeUpload={handleUploadAvatar} itemRender={() => void 0} maxCount={1}>
-          <NextImage
-            alt={avatar ? 'userAvatar' : 'LobeChat'}
-            height={size}
-            src={!!avatar ? avatar : DEFAULT_USER_AVATAR_URL}
-            unoptimized
-            width={size}
-          />
-        </Upload>
+        <NextImage
+          alt={avatar ? 'userAvatar' : 'LobeChat'}
+          height={size}
+          src={!!avatar ? avatar : DEFAULT_USER_AVATAR_URL}
+          unoptimized
+          width={size}
+        />
       </div>
     );
   },
