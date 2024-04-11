@@ -1,9 +1,8 @@
-import { Avatar, ChatHeaderTitle, Logo, Markdown } from '@lobehub/ui';
+import { Avatar, ChatHeaderTitle, Markdown } from '@lobehub/ui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flexbox } from 'react-layout-kit';
+import { Center, Flexbox } from 'react-layout-kit';
 
-import pkg from '@/../package.json';
 import ModelTag from '@/components/ModelTag';
 import ChatList from '@/features/Conversation/components/ChatList';
 import { useSessionStore } from '@/store/session';
@@ -58,8 +57,9 @@ const Preview = memo<FieldType & { title?: string }>(
             <ChatList />
             {withFooter ? (
               <Flexbox align={'center'} className={styles.footer} gap={4}>
-                <Logo extra={'chat'} type={'combine'} />
-                <div className={styles.url}>{pkg.homepage}</div>
+                <Center style={{ color: 'black', fontSize: '23px', fontWeight: 'bold' }}>
+                  {'ChatGPT'}
+                </Center>
               </Flexbox>
             ) : (
               <div />
