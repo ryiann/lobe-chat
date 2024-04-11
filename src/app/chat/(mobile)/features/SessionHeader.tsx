@@ -3,10 +3,9 @@ import { createStyles } from 'antd-style';
 import { MessageSquarePlus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { Center, Flexbox } from 'react-layout-kit';
 
 import { MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
-import SyncStatusInspector from '@/features/SyncStatusInspector';
 import { useGlobalStore } from '@/store/global';
 import { commonSelectors } from '@/store/global/selectors';
 import { useSessionStore } from '@/store/session';
@@ -33,8 +32,9 @@ const Header = memo(() => {
           <div onClick={() => router.push('/settings')}>
             {avatar ? <Avatar avatar={avatar} size={28} /> : <Logo size={28} />}
           </div>
-          <Logo type={'text'} />
-          <SyncStatusInspector placement={'bottom'} />
+          <Center style={{ color: 'black', fontSize: '22px', fontWeight: 'bold' }}>
+            {'ChatGPT'}
+          </Center>
         </Flexbox>
       }
       right={
