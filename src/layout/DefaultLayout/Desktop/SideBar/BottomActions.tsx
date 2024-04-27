@@ -1,18 +1,9 @@
 import { ActionIcon, Icon } from '@lobehub/ui';
 import { Dropdown, MenuProps } from 'antd';
-import {
-  Book,
-  Github,
-  HardDriveDownload,
-  HardDriveUpload,
-  Settings,
-  Settings2,
-} from 'lucide-react';
+import { Book, Github, HardDriveDownload, HardDriveUpload, Settings2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flexbox } from 'react-layout-kit';
 
 import { DOCUMENTS, GITHUB } from '@/const/url';
 import DataImporter from '@/features/DataImporter';
@@ -25,7 +16,6 @@ export interface BottomActionProps {
 }
 
 const BottomActions = memo<BottomActionProps>(({ tab }) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
 
   const [, useCheckLatestVersion] = useGlobalStore((s) => [
@@ -70,21 +60,6 @@ const BottomActions = memo<BottomActionProps>(({ tab }) => {
       icon: <Icon icon={HardDriveDownload} />,
       key: 'export',
       label: t('export'),
-    },
-    {
-      type: 'divider',
-    },
-    {
-      icon: <Icon icon={Settings} />,
-      key: 'setting',
-      label: (
-        <Flexbox align={'center'} distribution={'space-between'} gap={8} horizontal>
-          {t('setting')}
-        </Flexbox>
-      ),
-      onClick: () => {
-        router.push('/settings/common');
-      },
     },
   ];
 
