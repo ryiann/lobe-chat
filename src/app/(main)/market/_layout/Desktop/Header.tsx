@@ -1,12 +1,13 @@
 'use client';
 
-import { ChatHeader, Logo } from '@lobehub/ui';
-import { createStyles } from 'antd-style';
-import { memo } from 'react';
+import {ChatHeader} from '@lobehub/ui';
+import {rgba} from 'polished';
+import {createStyles} from 'antd-style';
+import {memo} from 'react';
 
-import ShareAgentButton from '../../features/ShareAgentButton';
+import {Center} from "react-layout-kit";
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const useStyles = createStyles(({css, token}) => ({
   logo: css`
     color: ${token.colorText};
     fill: ${token.colorText};
@@ -14,12 +15,15 @@ export const useStyles = createStyles(({ css, token }) => ({
 }));
 
 const Header = memo(() => {
-  const { styles } = useStyles();
+
 
   return (
     <ChatHeader
-      left={<Logo className={styles.logo} extra={'Discover'} size={36} type={'text'} />}
-      right={<ShareAgentButton />}
+      left={<><Center style={{color: 'black', fontSize: '25px', fontWeight: 'bold'}}> {'FunChat'} </Center><Center
+        style={{color: rgba(0, 0, 0, 0.12), fontSize: '23px', fontStyle: 'oblique'}}>
+        /&nbsp;
+      </Center><Center style={{color: 'black', fontSize: '25px'}}>{'Discover'}
+      </Center></>}
     />
   );
 });
