@@ -11,7 +11,7 @@ const Header = memo(() => {
   return (
     <MobileNavBar
       center={<div style={{ fontSize: 20, fontWeight: 900 }}>Discover</div>}
-      right={<ShareAgentButton mobile />}
+      right={<ShareAgentButton />}
       style={mobileHeaderSticky}
     />
   );
