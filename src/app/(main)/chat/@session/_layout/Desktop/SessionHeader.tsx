@@ -1,11 +1,11 @@
 'use client';
 
-import { ActionIcon, Logo } from '@lobehub/ui';
+import { ActionIcon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { MessageSquarePlus } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flexbox } from 'react-layout-kit';
+import {Center, Flexbox} from 'react-layout-kit';
 
 import { DESKTOP_HEADER_ICON_SIZE } from '@/const/layoutTokens';
 import SyncStatusTag from '@/features/SyncStatusInspector';
@@ -37,8 +37,10 @@ const Header = memo(() => {
     <Flexbox className={styles.top} gap={16} padding={16}>
       <Flexbox distribution={'space-between'} horizontal>
         <Flexbox align={'center'} gap={4} horizontal>
-          <Logo className={styles.logo} size={36} type={'text'} />
-          {enableWebrtc && <SyncStatusTag />}
+          <Center style={{ color: 'black', fontSize: '25px', fontWeight: 'bold' }}>
+            {'FunChat'}
+          </Center>
+          {enableWebrtc && <SyncStatusTag/>}
         </Flexbox>
         {showCreateSession && (
           <ActionIcon
