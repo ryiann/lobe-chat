@@ -40,7 +40,6 @@ const Header = memo(() => {
           <Center style={{ color: 'black', fontSize: '25px', fontWeight: 'bold' }}>
             {'FunChat'}
           </Center>
-          {enableWebrtc && <SyncStatusTag/>}
         </Flexbox>
         {showCreateSession && (
           <ActionIcon
