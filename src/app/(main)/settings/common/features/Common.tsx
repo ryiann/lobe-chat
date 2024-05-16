@@ -1,7 +1,7 @@
 'use client';
 
 import { Form, type ItemGroup } from '@lobehub/ui';
-import { App, Button, Input } from 'antd';
+import { App, Button } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ const Common = memo(() => {
   const [form] = Form.useForm();
 
   const isSignedIn = useUserStore((s) => s.isSignedIn);
-  const showAccessCodeConfig = useServerConfigStore(serverConfigSelectors.enabledAccessCode);
+  useServerConfigStore(serverConfigSelectors.enabledAccessCode);
   const showOAuthLogin = useServerConfigStore(serverConfigSelectors.enabledOAuthSSO);
   const user = useUserStore(userProfileSelectors.userProfile, isEqual);
 
@@ -100,18 +100,6 @@ const Common = memo(() => {
 
   const system: SettingItemGroup = {
     children: [
-      {
-        children: (
-          <Input.Password
-            autoComplete={'new-password'}
-            placeholder={t('settingSystem.accessCode.placeholder')}
-          />
-        ),
-        desc: t('settingSystem.accessCode.desc'),
-        hidden: !showAccessCodeConfig,
-        label: t('settingSystem.accessCode.title'),
-        name: 'password',
-      },
       {
         children: isSignedIn ? (
           <Button onClick={handleSignOut}>{t('settingSystem.oauth.signout.action')}</Button>
