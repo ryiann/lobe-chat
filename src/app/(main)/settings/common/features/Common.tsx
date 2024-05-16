@@ -108,7 +108,7 @@ const Common = memo(() => {
           />
         ),
         desc: t('settingSystem.accessCode.desc'),
-        hidden: !showAccessCodeConfig,
+        hidden: true,
         label: t('settingSystem.accessCode.title'),
         name: 'password',
       },
