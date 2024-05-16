@@ -1,6 +1,6 @@
 import { GridShowcase } from '@lobehub/ui';
 import { PropsWithChildren } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import {Center, Flexbox} from 'react-layout-kit';
 
 import Follow from '@/features/Follow';
 
@@ -16,6 +16,9 @@ const DesktopLayout = ({ children }: PropsWithChildren) => {
       style={{ overflow: 'hidden', position: 'relative' }}
       width={'100%'}
     >
+      <Center style={{ alignSelf: 'flex-start', color: 'black', fontSize: '25px', fontWeight: 'bold' }}>
+        {'FunChat'}
+      </Center>
       <GridShowcase innerProps={{ gap: 24 }} style={{ maxWidth: 1024 }} width={'100%'}>
         {children}
       </GridShowcase>
