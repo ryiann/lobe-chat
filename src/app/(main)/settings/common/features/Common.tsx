@@ -25,7 +25,7 @@ const Common = memo(() => {
   const [form] = Form.useForm();
 
   const isSignedIn = useUserStore((s) => s.isSignedIn);
-  const showAccessCodeConfig = useServerConfigStore(serverConfigSelectors.enabledAccessCode);
+  useServerConfigStore(serverConfigSelectors.enabledAccessCode);
   const showOAuthLogin = useServerConfigStore(serverConfigSelectors.enabledOAuthSSO);
   const user = useUserStore(userProfileSelectors.userProfile, isEqual);
 
