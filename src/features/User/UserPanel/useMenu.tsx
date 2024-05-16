@@ -1,5 +1,4 @@
 import { ActionIcon, Icon } from '@lobehub/ui';
-import { Badge } from 'antd';
 import {
   CircleUserRound,
   Download,
@@ -9,14 +8,12 @@ import {
   Maximize,
   Settings2,
 } from 'lucide-react';
-import { PropsWithChildren, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 import urlJoin from 'url-join';
 
 import type { MenuProps } from '@/components/Menu';
 import DataImporter from '@/features/DataImporter';
-import { useOpenSettings } from '@/hooks/useInterceptingRoutes';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { useQueryRoute } from '@/hooks/useQueryRoute';
 import { configService } from '@/services/config';
@@ -24,35 +21,9 @@ import { SettingsTabs } from '@/store/global/initialState';
 import { useUserStore } from '@/store/user';
 import { authSelectors } from '@/store/user/selectors';
 
-import { useNewVersion } from './useNewVersion';
-
-const NewVersionBadge = memo(
-  ({
-    children,
-    showBadge,
-    onClick,
-  }: PropsWithChildren & { onClick: () => void; showBadge?: boolean }) => {
-    const { t } = useTranslation('common');
-    if (!showBadge)
-      return (
-        <Flexbox flex={1} onClick={onClick}>
-          {children}
-        </Flexbox>
-      );
-    return (
-      <Flexbox align={'center'} flex={1} gap={8} horizontal onClick={onClick} width={'100%'}>
-        <span>{children}</span>
-        <Badge count={t('upgradeVersion.hasNew')} />
-      </Flexbox>
-    );
-  },
-);
-
 export const useMenu = () => {
   const router = useQueryRoute();
   const { canInstall, install } = usePWAInstall();
-  const hasNewVersion = useNewVersion();
-  const openSettings = useOpenSettings();
   const { t } = useTranslation(['common', 'setting', 'auth']);
   const [isLogin, isLoginWithAuth, isLoginWithClerk, openUserProfile] = useUserStore((s) => [
     authSelectors.isLogin(s),
@@ -76,9 +47,6 @@ export const useMenu = () => {
       key: 'setting',
       label: (
         <Flexbox align={'center'} gap={8} horizontal>
-          <NewVersionBadge onClick={openSettings} showBadge={false && hasNewVersion}>
-            {t('userPanel.setting')}
-          </NewVersionBadge>
           <ActionIcon
             icon={Maximize}
             onClick={() => router.push(urlJoin('/settings', SettingsTabs.Common))}
