@@ -25,7 +25,7 @@ const Common = memo(() => {
   const [form] = Form.useForm();
 
   const isSignedIn = useUserStore((s) => s.isSignedIn);
-  useServerConfigStore(serverConfigSelectors.enabledAccessCode);
+  const showAccessCodeConfig = useServerConfigStore(serverConfigSelectors.enabledAccessCode);
   const showOAuthLogin = useServerConfigStore(serverConfigSelectors.enabledOAuthSSO);
   const user = useUserStore(userProfileSelectors.userProfile, isEqual);
 
@@ -108,7 +108,7 @@ const Common = memo(() => {
           />
         ),
         desc: t('settingSystem.accessCode.desc'),
-        hidden: true,
+        hidden: !showAccessCodeConfig,
         label: t('settingSystem.accessCode.title'),
         name: 'password',
       },
