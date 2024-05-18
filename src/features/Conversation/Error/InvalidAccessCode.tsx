@@ -1,7 +1,7 @@
 import { Icon } from '@lobehub/ui';
 import { Segmented } from 'antd';
 import { SegmentedLabeledOption } from 'antd/es/segmented';
-import { AsteriskSquare, KeySquare, ScanFace } from 'lucide-react';
+import { AsteriskSquare, ScanFace } from 'lucide-react';
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
@@ -9,7 +9,6 @@ import { Flexbox } from 'react-layout-kit';
 import { useServerConfigStore } from '@/store/serverConfig';
 import { serverConfigSelectors } from '@/store/serverConfig/selectors';
 
-import APIKeyForm from './APIKeyForm';
 import AccessCodeForm from './AccessCodeForm';
 import OAuthForm from './OAuthForm';
 import { ErrorActionContainer } from './style';
@@ -50,7 +49,6 @@ const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
               label: t('unlock.tabs.password'),
               value: Tab.Password,
             },
-            { icon: <Icon icon={KeySquare} />, label: t('unlock.tabs.apiKey'), value: Tab.Api },
           ].filter(Boolean) as SegmentedLabeledOption[]
         }
         style={{ width: '100%' }}
@@ -58,7 +56,6 @@ const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
       />
       <Flexbox gap={24}>
         {mode === Tab.Password && <AccessCodeForm id={id} />}
-        {mode === Tab.Api && <APIKeyForm id={id} provider={provider} />}
         {isEnabledOAuth && mode === Tab.Oauth && <OAuthForm id={id} />}
       </Flexbox>
     </ErrorActionContainer>
