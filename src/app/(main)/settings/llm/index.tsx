@@ -18,7 +18,6 @@ import Perplexity from './Perplexity';
 import TogetherAI from './TogetherAI';
 import ZeroOne from './ZeroOne';
 import Zhipu from './Zhipu';
-import Footer from './components/Footer';
 
 const Page = () => {
   return (
@@ -39,7 +38,6 @@ const Page = () => {
       <Moonshot />
       <Zhipu />
       <ZeroOne />
-      <Footer />
     </Flexbox>
   );
 };
