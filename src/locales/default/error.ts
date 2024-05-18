@@ -69,7 +69,7 @@ export default {
     PluginGatewayError: '很抱歉，插件网关出现错误，请检查插件网关配置是否正确',
     PluginOpenApiInitError: '很抱歉，OpenAPI 客户端初始化失败，请检查 OpenAPI 的配置信息是否正确',
 
-    InvalidAccessCode: '密码不正确或为空，请输入正确的访问密码，或者添加自定义 API Key',
+    InvalidAccessCode: '密码不正确或为空，请输入正确的访问密码',
     InvalidClerkUser: '很抱歉，你当前尚未登录，请先登录或注册账号后继续操作',
     LocationNotSupportError:
       '很抱歉，你的所在地区不支持此模型服务，可能是由于区域限制或服务未开通。请确认当前地区是否支持使用此服务，或尝试使用切换到其他地区后重试。',
@@ -94,7 +94,7 @@ export default {
 
     InvalidDeepSeekAPIKey: 'DeepSeek API Key 不正确或为空，请检查 DeepSeek API Key 后重试',
     DeepSeekBizError: '请求 DeepSeek 服务出错，请根据以下信息排查或重试',
-    
+
     InvalidAzureAPIKey: 'Azure API Key 不正确或为空，请检查 Azure API Key 后重试',
     AzureBizError: '请求 Azure AI 服务出错，请根据以下信息排查或重试',
 
