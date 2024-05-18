@@ -9,7 +9,6 @@ import { Flexbox } from 'react-layout-kit';
 import { useServerConfigStore } from '@/store/serverConfig';
 import { serverConfigSelectors } from '@/store/serverConfig/selectors';
 
-import APIKeyForm from './APIKeyForm';
 import AccessCodeForm from './AccessCodeForm';
 import OAuthForm from './OAuthForm';
 import { ErrorActionContainer } from './style';
@@ -57,7 +56,6 @@ const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
       />
       <Flexbox gap={24}>
         {mode === Tab.Password && <AccessCodeForm id={id} />}
-        {mode === Tab.Api && <APIKeyForm id={id} provider={provider} />}
         {isEnabledOAuth && mode === Tab.Oauth && <OAuthForm id={id} />}
       </Flexbox>
     </ErrorActionContainer>
