@@ -24,7 +24,7 @@ interface InvalidAccessCodeProps {
   provider?: string;
 }
 
-const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
+const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id}) => {
   const { t } = useTranslation('error');
   const isEnabledOAuth = useServerConfigStore(serverConfigSelectors.enabledOAuthSSO);
   const defaultTab = isEnabledOAuth ? Tab.Oauth : Tab.Password;
