@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import { useGreeting } from '@/hooks/useGreeting';
-import { useServerConfigStore } from '@/store/serverConfig';
+import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
 
 import AgentsSuggest from './AgentsSuggest';
+import QuestionSuggest from './QuestionSuggest';
 
 const useStyles = createStyles(({ css, responsive }) => ({
   container: css`
@@ -43,6 +44,7 @@ const InboxWelcome = memo(() => {
   const { styles } = useStyles();
   const mobile = useServerConfigStore((s) => s.isMobile);
   const greeting = useGreeting();
+  const { showWelcomeSuggest } = useServerConfigStore(featureFlagsSelectors);
 
   return (
     <Center padding={16} width={'100%'}>
@@ -54,7 +56,12 @@ const InboxWelcome = memo(() => {
         <Markdown className={styles.desc} variant={'chat'}>
           {t('guide.defaultMessage')}
         </Markdown>
-        <AgentsSuggest mobile={mobile} />
+        {
+          showWelcomeSuggest && <>
+            <AgentsSuggest mobile={mobile} />
+            <QuestionSuggest mobile={mobile} />
+          </>
+        }
       </Flexbox>
     </Center>
   );
