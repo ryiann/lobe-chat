@@ -1,5 +1,6 @@
 import { Icon } from '@lobehub/ui';
-import { Bot, Brain, Mic2, Settings2 } from 'lucide-react';
+import { Bot, Brain, Mic2, Settings2, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,18 +18,48 @@ export const useCategory = () => {
         {
           icon: <Icon icon={Settings2} />,
           key: SettingsTabs.Common,
-          label: t('tab.common'),
+          label: (
+            <Link href={'/settings/common'} onClick={(e) => e.preventDefault()}>
+              {t('tab.common')}
+            </Link>
+          ),
+        },
+        {
+          icon: <Icon icon={Sparkles} />,
+          key: SettingsTabs.SystemAgent,
+          label: (
+            <Link href={'/settings/system-agent'} onClick={(e) => e.preventDefault()}>
+              {t('tab.system-agent')}
+            </Link>
+          ),
         },
         showLLM && {
           icon: <Icon icon={Brain} />,
           key: SettingsTabs.LLM,
-          label: t('tab.llm'),
+          label: (
+            <Link href={'/settings/llm'} onClick={(e) => e.preventDefault()}>
+              {t('tab.llm')}
+            </Link>
+          ),
         },
-        { icon: <Icon icon={Mic2} />, key: SettingsTabs.TTS, label: t('tab.tts') },
+
+        {
+          icon: <Icon icon={Mic2} />,
+          key: SettingsTabs.TTS,
+          label: (
+            <Link href={'/settings/tts'} onClick={(e) => e.preventDefault()}>
+              {t('tab.tts')}
+            </Link>
+          ),
+        },
         {
           icon: <Icon icon={Bot} />,
           key: SettingsTabs.Agent,
-          label: t('tab.agent'),
+          label: (
+            <Link href={'/settings/agent'} onClick={(e) => e.preventDefault()}>
+              {t('tab.agent')}
+            </Link>
+          ),
         },
       ].filter(Boolean) as MenuProps['items'],
     [t, enableWebrtc, showLLM],
