@@ -60,6 +60,10 @@ export const useCategory = () => {
     },
   ];
 
+  /* ↓ cloud slot ↓ */
+
+  /* ↑ cloud slot ↑ */
+
   const data: CellProps[] = [
     {
       icon: Database,
@@ -78,6 +82,9 @@ export const useCategory = () => {
     },
     ...(isLoginWithClerk ? profile : []),
     ...(enableAuth ? (isLoginWithAuth ? settings : []) : settingsWithoutAuth),
+    /* ↓ cloud slot ↓ */
+
+    /* ↑ cloud slot ↑ */
     ...(canInstall ? pwa : []),
     ...(isLogin ? data : []),
   ].filter(Boolean) as CellProps[];
