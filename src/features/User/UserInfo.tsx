@@ -4,7 +4,6 @@ import { createStyles } from 'antd-style';
 import { memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import PlanTag from '@/features/User/PlanTag';
 import { useUserStore } from '@/store/user';
 import { userProfileSelectors } from '@/store/user/selectors';
 
@@ -29,7 +28,7 @@ export interface UserInfoProps extends FlexboxProps {
 const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
   const { styles, theme } = useStyles();
 
-  const [nickname, username] = useUserStore((s) => [
+  const [,] = useUserStore((s) => [
     userProfileSelectors.nickName(s),
     userProfileSelectors.username(s),
   ]);
@@ -47,11 +46,10 @@ const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
       <Flexbox align={'center'} gap={12} horizontal>
         <UserAvatar background={theme.colorFill} size={48} {...avatarProps} />
         <Flexbox flex={1} gap={6}>
-          <div className={styles.nickname}>{nickname}</div>
-          <div className={styles.username}>{username}</div>
+          <div className={styles.nickname}>个人用户</div>
+          <div className={styles.username}>FunChat</div>
         </Flexbox>
       </Flexbox>
-      <PlanTag />
     </Flexbox>
   );
 });
