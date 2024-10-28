@@ -2,11 +2,10 @@ import { GridShowcase } from '@lobehub/ui';
 import { PropsWithChildren } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { ORG_NAME } from '@/const/branding';
 import { isCustomORG } from '@/const/version';
 import Follow from '@/features/Follow';
 
-const COPYRIGHT = `© ${new Date().getFullYear()} ${ORG_NAME}`;
+const COPYRIGHT = `仅供学习交流使用，请勿用于任何商业用途。`;
 
 const DesktopLayout = ({ children }: PropsWithChildren) => {
   return (
