@@ -1,18 +1,8 @@
-import { DiscordIcon } from '@lobehub/ui';
-import {
-  Book,
-  CircleUserRound,
-  Database,
-  Download,
-  Feather,
-  LogOut,
-  Settings2,
-} from 'lucide-react';
+import { CircleUserRound, Database, Download, LogOut, Settings2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { CellProps } from '@/components/Cell';
-import { DISCORD, DOCUMENTS, FEEDBACK } from '@/const/url';
 import { isServerMode } from '@/const/version';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { useUserStore } from '@/store/user';
@@ -90,27 +80,6 @@ export const useCategory = () => {
     },
   ];
 
-  const helps: CellProps[] = [
-    {
-      icon: Book,
-      key: 'docs',
-      label: t('document'),
-      onClick: () => window.open(DOCUMENTS, '__blank'),
-    },
-    {
-      icon: Feather,
-      key: 'feedback',
-      label: t('feedback'),
-      onClick: () => window.open(FEEDBACK, '__blank'),
-    },
-    {
-      icon: DiscordIcon,
-      key: 'discord',
-      label: 'Discord',
-      onClick: () => window.open(DISCORD, '__blank'),
-    },
-  ];
-
   const nextAuthSignOut: CellProps[] = [
     {
       icon: LogOut,
@@ -131,7 +100,6 @@ export const useCategory = () => {
     /* ↑ cloud slot ↑ */
     ...(canInstall ? pwa : []),
     ...(isLogin && !isServerMode ? data : []),
-    ...helps,
     ...(enableAuth && isLoginWithNextAuth ? nextAuthSignOut : []),
   ].filter(Boolean) as CellProps[];
 
