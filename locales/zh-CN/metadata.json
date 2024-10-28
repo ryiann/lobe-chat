@@ -1,7 +1,7 @@
 {
   "chat": {
-    "description": "{{appName}} 带给你最好的 ChatGPT, Claude , Gemini, OLLaMA WebUI 使用体验",
-    "title": "{{appName}}：个人 AI 效能工具，给自己一个更聪明的大脑"
+    "description": "FunChat 带给你最好的 ChatGPT, Claude , Gemini, OLLaMA WebUI 使用体验",
+    "title": "FunChat：个人 AI 效能工具，给自己一个更聪明的大脑"
   },
   "discover": {
     "assistants": {
@@ -29,7 +29,7 @@
     "title": "插件市场"
   },
   "welcome": {
-    "description": "{{appName}} 带给你最好的 ChatGPT, Claude , Gemini, OLLaMA WebUI 使用体验",
-    "title": "欢迎使用 {{appName}}：个人 AI 效能工具，给自己一个更聪明的大脑"
+    "description": "FunChat 带给你最好的 ChatGPT, Claude , Gemini, OLLaMA WebUI 使用体验",
+    "title": "欢迎使用 FunChat：个人 AI 效能工具，给自己一个更聪明的大脑"
   }
 }
