@@ -3,7 +3,6 @@ import { PropsWithChildren } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { isCustomORG } from '@/const/version';
-import Follow from '@/features/Follow';
 
 const COPYRIGHT = `仅供学习交流使用，请勿用于任何商业用途。`;
 
@@ -28,7 +27,7 @@ const DesktopLayout = ({ children }: PropsWithChildren) => {
         </GridShowcase>
         <Flexbox align={'center'} horizontal justify={'space-between'}>
           <span style={{ opacity: 0.5 }}>{COPYRIGHT}</span>
-          {isCustomORG ? <div /> : <Follow />}
+          {isCustomORG ? <div /> : <div />}
         </Flexbox>
       </Flexbox>
       {/* ↓ cloud slot ↓ */}
