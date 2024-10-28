@@ -6,9 +6,7 @@ import Link from 'next/link';
 import { memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import { ORG_NAME } from '@/const/branding';
-import { UTM_SOURCE } from '@/const/url';
-import { isCustomORG } from '@/const/version';
+import { NEW_ORG_NAME } from '@/const/branding';
 
 const useStyles = createStyles(({ token, css }) => ({
   logoLink: css`
@@ -33,14 +31,10 @@ const BrandWatermark = memo<Omit<FlexboxProps, 'children'>>(({ style, ...rest })
       {...rest}
     >
       <span>Powered by</span>
-      {isCustomORG ? (
-        <span>{ORG_NAME}</span>
+      {NEW_ORG_NAME ? (
+        <span>{NEW_ORG_NAME}</span>
       ) : (
-        <Link
-          className={styles.logoLink}
-          href={`https://lobehub.com?utm_source=${UTM_SOURCE}&utm_content=brand_watermark`}
-          target={'_blank'}
-        >
+        <Link className={styles.logoLink} href={`https://chat.funtui.com`} target={'_blank'}>
           <LobeHub size={20} type={'text'} />
         </Link>
       )}

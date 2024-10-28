@@ -10,6 +10,7 @@ export const NEW_BRANDING_NAME = 'FunChat';
 export const BRANDING_LOGO_URL = '';
 
 export const ORG_NAME = 'LobeHub';
+export const NEW_ORG_NAME = 'FunChat';
 
 export const BRANDING_URL = {
   help: undefined,
