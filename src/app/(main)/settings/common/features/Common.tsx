@@ -23,9 +23,7 @@ type SettingItemGroup = ItemGroup;
 const Common = memo(() => {
   const { t } = useTranslation('setting');
   const [form] = Form.useForm();
-
-  const showAccessCodeConfig = useServerConfigStore(serverConfigSelectors.enabledAccessCode);
-
+  useServerConfigStore(serverConfigSelectors.enabledAccessCode);
   const [clearSessions, clearSessionGroups] = useSessionStore((s) => [
     s.clearSessions,
     s.clearSessionGroups,
@@ -84,7 +82,7 @@ const Common = memo(() => {
           />
         ),
         desc: t('settingSystem.accessCode.desc'),
-        hidden: !showAccessCodeConfig,
+        hidden: true,
         label: t('settingSystem.accessCode.title'),
         name: ['keyVaults', 'password'],
       },
