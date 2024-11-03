@@ -4,8 +4,9 @@ import { createStyles } from 'antd-style';
 import { memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import PlanTag from '@/features/User/PlanTag';
 import { useUserStore } from '@/store/user';
-import { userProfileSelectors } from '@/store/user/selectors';
+import { authSelectors, userProfileSelectors } from '@/store/user/selectors';
 
 import UserAvatar, { type UserAvatarProps } from './UserAvatar';
 
@@ -27,8 +28,8 @@ export interface UserInfoProps extends FlexboxProps {
 
 const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
   const { styles, theme } = useStyles();
-
-  const [,] = useUserStore((s) => [
+  const isSignedIn = useUserStore(authSelectors.isLogin);
+  const [nickname, username] = useUserStore((s) => [
     userProfileSelectors.nickName(s),
     userProfileSelectors.username(s),
   ]);
@@ -46,10 +47,11 @@ const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
       <Flexbox align={'center'} gap={12} horizontal>
         <UserAvatar background={theme.colorFill} size={48} {...avatarProps} />
         <Flexbox flex={1} gap={6}>
-          <div className={styles.nickname}>个人用户</div>
-          <div className={styles.username}>FunChat</div>
+          <div className={styles.nickname}>{nickname}</div>
+          <div className={styles.username}>{username}</div>
         </Flexbox>
       </Flexbox>
+      {isSignedIn && <PlanTag />}
     </Flexbox>
   );
 });
