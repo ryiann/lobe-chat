@@ -14,7 +14,7 @@ const manifest = async (): Promise<MetadataRoute.Manifest | any> => {
       {
         purpose: 'any',
         sizes: '192x192',
-        url: '/icons/icon-192x192.png',
+        url: 'https://cdn.ryana.cn/funchat/icon-192x192.png',
       },
       {
         purpose: 'maskable',
@@ -24,7 +24,7 @@ const manifest = async (): Promise<MetadataRoute.Manifest | any> => {
       {
         purpose: 'any',
         sizes: '512x512',
-        url: '/icons/icon-512x512.png',
+        url: 'https://cdn.ryana.cn/funchat/icon-512x512.png',
       },
       {
         purpose: 'maskable',
