@@ -1,4 +1,3 @@
-import { WelcomeLogo } from '@/components/Branding';
 import StructuredData from '@/components/StructuredData';
 import { BRANDING_NAME } from '@/const/branding';
 import { ldModule } from '@/server/ld';
@@ -30,7 +29,6 @@ const Page = async () => {
   return (
     <>
       <StructuredData ld={ld} />
-      <WelcomeLogo mobile={mobile} />
       <Hero />
       <Actions mobile={mobile} />
     </>
