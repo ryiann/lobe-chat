@@ -27,9 +27,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
     icons: isCustomBranding
       ? BRANDING_LOGO_URL
       : {
-          apple: '/apple-touch-icon.png?v=1',
-          icon: '/favicon.ico?v=1',
-          shortcut: '/favicon-32x32.ico?v=1',
+          apple: 'https://cdn.ryana.cn/funchat/apple-touch-icon.png?v=1',
+          icon: 'https://cdn.ryana.cn/funchat/favicon.ico?v=1',
+          shortcut: 'https://cdn.ryana.cn/funchat/favicon-32x32.ico?v=1',
         },
     manifest: noManifest ? undefined : '/manifest.json',
     metadataBase: new URL(OFFICIAL_URL),
@@ -57,7 +57,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       card: 'summary_large_image',
       description: t('chat.description', { appName: BRANDING_NAME }),
       images: [OG_URL],
-      site: isCustomORG ? `@${ORG_NAME}` : '@lobehub',
+      site: isCustomORG ? `@${ORG_NAME}` : `@${ORG_NAME}`,
       title: t('chat.title', { appName: BRANDING_NAME }),
     },
   };
