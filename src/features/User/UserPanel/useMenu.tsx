@@ -31,8 +31,6 @@ import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfi
 import { useUserStore } from '@/store/user';
 import { authSelectors } from '@/store/user/selectors';
 
-import { useNewVersion } from './useNewVersion';
-
 const NewVersionBadge = memo(
   ({
     children,
@@ -58,7 +56,6 @@ const NewVersionBadge = memo(
 export const useMenu = () => {
   const router = useQueryRoute();
   const { canInstall, install } = usePWAInstall();
-  const hasNewVersion = useNewVersion();
   const openSettings = useOpenSettings();
   const { t } = useTranslation(['common', 'setting', 'auth']);
   const { showCloudPromotion, hideDocs } = useServerConfigStore(featureFlagsSelectors);
@@ -91,7 +88,7 @@ export const useMenu = () => {
       icon: <Icon icon={Settings2} />,
       key: 'setting',
       label: (
-        <NewVersionBadge onClick={openSettings} showBadge={hasNewVersion}>
+        <NewVersionBadge onClick={openSettings} showBadge={false}>
           {t('userPanel.setting')}
         </NewVersionBadge>
       ),
