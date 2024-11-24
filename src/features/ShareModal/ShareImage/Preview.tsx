@@ -2,10 +2,10 @@ import { ModelTag } from '@lobehub/icons';
 import { Avatar, ChatHeaderTitle, Markdown } from '@lobehub/ui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Center, Flexbox } from 'react-layout-kit';
+import { Flexbox } from 'react-layout-kit';
 
 import PluginTag from '@/app/(main)/chat/(workspace)/features/PluginTag';
-import ChatList from '@/features/Conversation/components/ChatList';
+import { ProductLogo } from '@/components/Branding';
 import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/selectors';
 import { useSessionStore } from '@/store/session';
@@ -13,6 +13,7 @@ import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selector
 
 import pkg from '../../../../package.json';
 import { useContainerStyles } from '../style';
+import ChatList from './ChatList';
 import { useStyles } from './style';
 import { FieldType } from './type';
 
@@ -64,9 +65,7 @@ const Preview = memo<FieldType & { title?: string }>(
             <ChatList />
             {withFooter ? (
               <Flexbox align={'center'} className={styles.footer} gap={4}>
-                <Center style={{ color: 'black', fontSize: '1.4rem', fontWeight: 'bold' }}>
-                  {'FunChat'}
-                </Center>
+                <ProductLogo type={'combine'} />
                 <div className={styles.url}>{pkg.homepage}</div>
               </Flexbox>
             ) : (
