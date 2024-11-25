@@ -2,6 +2,131 @@
 
 # Changelog
 
+### [Version 1.33.1](https://github.com/lobehub/lobe-chat/compare/v1.33.0...v1.33.1)
+
+<sup>Released on **2024-11-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add gemini-exp-1121 model.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add gemini-exp-1121 model, closes [#4783](https://github.com/lobehub/lobe-chat/issues/4783) ([3b2cd88](https://github.com/lobehub/lobe-chat/commit/3b2cd88))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version 1.33.0](https://github.com/lobehub/lobe-chat/compare/v1.32.9...v1.33.0)
+
+<sup>Released on **2024-11-25**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Gitee AI model provider.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Gitee AI model provider, closes [#4716](https://github.com/lobehub/lobe-chat/issues/4716) ([f1cb0af](https://github.com/lobehub/lobe-chat/commit/f1cb0af))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.32.9](https://github.com/lobehub/lobe-chat/compare/v1.32.8...v1.32.9)
+
+<sup>Released on **2024-11-24**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support to reset fetched models.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support to reset fetched models, closes [#4260](https://github.com/lobehub/lobe-chat/issues/4260) ([22480a9](https://github.com/lobehub/lobe-chat/commit/22480a9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.32.8](https://github.com/lobehub/lobe-chat/compare/v1.32.7...v1.32.8)
+
+<sup>Released on **2024-11-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix `XAI_PROXY_URL` env missing.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix `XAI_PROXY_URL` env missing, closes [#4747](https://github.com/lobehub/lobe-chat/issues/4747) ([7c9e88e](https://github.com/lobehub/lobe-chat/commit/7c9e88e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.32.7](https://github.com/lobehub/lobe-chat/compare/v1.32.6...v1.32.7)
+
+<sup>Released on **2024-11-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix tool message display.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix tool message display, closes [#4776](https://github.com/lobehub/lobe-chat/issues/4776) ([9d9b2a2](https://github.com/lobehub/lobe-chat/commit/9d9b2a2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.32.6](https://github.com/lobehub/lobe-chat/compare/v1.32.5...v1.32.6)
 
 <sup>Released on **2024-11-24**</sup>
