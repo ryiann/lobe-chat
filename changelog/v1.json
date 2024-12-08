@@ -1,5 +1,57 @@
 [
   {
+    "children": {
+      "improvements": ["Refactor async params route to adapt next15 breaking change."]
+    },
+    "date": "2024-12-07",
+    "version": "1.36.2"
+  },
+  {
+    "children": {
+      "improvements": ["Add gemini-exp-1206 model."]
+    },
+    "date": "2024-12-07",
+    "version": "1.36.1"
+  },
+  {
+    "children": {
+      "features": ["Add Higress ai model provider."]
+    },
+    "date": "2024-12-06",
+    "version": "1.36.0"
+  },
+  {
+    "children": {
+      "improvements": ["Refactor page params to adapt next15 breaking change."]
+    },
+    "date": "2024-12-06",
+    "version": "1.35.14"
+  },
+  {
+    "children": {},
+    "date": "2024-12-06",
+    "version": "1.35.13"
+  },
+  {
+    "children": {
+      "fixes": ["Fix typo of prompts."]
+    },
+    "date": "2024-12-05",
+    "version": "1.35.12"
+  },
+  {
+    "children": {},
+    "date": "2024-12-04",
+    "version": "1.35.11"
+  },
+  {
+    "children": {
+      "improvements": ["Refactor the server db model implement."]
+    },
+    "date": "2024-12-03",
+    "version": "1.35.10"
+  },
+  {
     "children": {},
     "date": "2024-12-03",
     "version": "1.35.9"
