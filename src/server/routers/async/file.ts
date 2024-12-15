@@ -3,6 +3,7 @@ import { chunk } from 'lodash-es';
 import pMap from 'p-map';
 import { z } from 'zod';
 
+import { serverDBEnv } from '@/config/db';
 import { fileEnv } from '@/config/file';
 import { DEFAULT_EMBEDDING_MODEL } from '@/const/settings';
 import { NewChunkItem, NewEmbeddingsItem } from '@/database/schemas';
@@ -175,7 +176,7 @@ export const fileRouter = router({
         console.error(e);
         // if file not found, delete it from db
         if ((e as any).Code === 'NoSuchKey') {
-          await ctx.fileModel.delete(input.fileId);
+          await ctx.fileModel.delete(input.fileId, serverDBEnv.REMOVE_GLOBAL_FILE);
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'File not found' });
         }
       }
