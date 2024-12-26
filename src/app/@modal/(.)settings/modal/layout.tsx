@@ -8,32 +8,39 @@ import { useTranslation } from 'react-i18next';
 import { useActiveSettingsKey } from '@/hooks/useActiveSettingsKey';
 import { SettingsTabs } from '@/store/global/initialState';
 
+import ModalLayout from '../../_layout/ModalLayout';
 import SettingModalLayout from '../../_layout/SettingModalLayout';
 
 const CategoryContent = dynamic(
   () => import('@/app/(main)/settings/@category/features/CategoryContent'),
   { loading: () => <Skeleton paragraph={{ rows: 6 }} title={false} />, ssr: false },
 );
-dynamic(() => import('@/app/(main)/settings/features/UpgradeAlert'), {
+const UpgradeAlert = dynamic(() => import('@/app/(main)/settings/features/UpgradeAlert'), {
   ssr: false,
 });
+
 const Layout = memo<PropsWithChildren>(({ children }) => {
   const { t } = useTranslation('setting');
   const activeKey = useActiveSettingsKey();
   return (
-    <SettingModalLayout
-      activeTitle={
-        <>
-          {t(`tab.${activeKey}`)}
-          {activeKey === SettingsTabs.Sync && <Tag color={'gold'}>{t('tab.experiment')}</Tag>}
-        </>
-      }
-      category={
-        <CategoryContent modal />
-      }
-    >
-      {children}
-    </SettingModalLayout>
+    <ModalLayout>
+      <SettingModalLayout
+        activeTitle={
+          <>
+            {t(`tab.${activeKey}`)}
+            {activeKey === SettingsTabs.Sync && <Tag color={'gold'}>{t('tab.experiment')}</Tag>}
+          </>
+        }
+        category={
+          <>
+            <CategoryContent modal />
+            <UpgradeAlert />
+          </>
+        }
+      >
+        {children}
+      </SettingModalLayout>
+    </ModalLayout>
   );
 });
 

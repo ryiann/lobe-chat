@@ -1,13 +1,18 @@
-import { ActionIcon, Icon } from '@lobehub/ui';
+import { ActionIcon, DiscordIcon, Icon } from '@lobehub/ui';
 import { Badge } from 'antd';
 import { ItemType } from 'antd/es/menu/interface';
 import {
+  Book,
   CircleUserRound,
   Cloudy,
   Download,
+  Feather,
+  FileClockIcon,
   HardDriveDownload,
   HardDriveUpload,
+  LifeBuoy,
   LogOut,
+  Mail,
   Maximize,
   Settings2,
 } from 'lucide-react';
@@ -19,7 +24,15 @@ import urlJoin from 'url-join';
 
 import type { MenuProps } from '@/components/Menu';
 import { LOBE_CHAT_CLOUD } from '@/const/branding';
-import { OFFICIAL_URL, UTM_SOURCE } from '@/const/url';
+import {
+  DISCORD,
+  DOCUMENTS_REFER_URL,
+  EMAIL_SUPPORT,
+  GITHUB_ISSUES,
+  OFFICIAL_URL,
+  UTM_SOURCE,
+  mailTo,
+} from '@/const/url';
 import { isServerMode } from '@/const/version';
 import DataImporter from '@/features/DataImporter';
 import { useOpenSettings } from '@/hooks/useInterceptingRoutes';
@@ -30,6 +43,8 @@ import { SettingsTabs } from '@/store/global/initialState';
 import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
 import { useUserStore } from '@/store/user';
 import { authSelectors } from '@/store/user/selectors';
+
+import { useNewVersion } from './useNewVersion';
 
 const NewVersionBadge = memo(
   ({
@@ -56,6 +71,7 @@ const NewVersionBadge = memo(
 export const useMenu = () => {
   const router = useQueryRoute();
   const { canInstall, install } = usePWAInstall();
+  const hasNewVersion = useNewVersion();
   const openSettings = useOpenSettings();
   const { t } = useTranslation(['common', 'setting', 'auth']);
   const { showCloudPromotion, hideDocs } = useServerConfigStore(featureFlagsSelectors);
@@ -88,7 +104,7 @@ export const useMenu = () => {
       icon: <Icon icon={Settings2} />,
       key: 'setting',
       label: (
-        <NewVersionBadge onClick={openSettings} showBadge={false}>
+        <NewVersionBadge onClick={openSettings} showBadge={hasNewVersion}>
           {t('userPanel.setting')}
         </NewVersionBadge>
       ),
@@ -159,35 +175,81 @@ export const useMenu = () => {
         },
       ].filter(Boolean) as ItemType[]);
 
-  const helps: MenuProps['items'] = hideDocs
-    ? []
-    : ([
-        showCloudPromotion && {
-          icon: <Icon icon={Cloudy} />,
-          key: 'cloud',
+  const helps: MenuProps['items'] = [
+    showCloudPromotion && {
+      icon: <Icon icon={Cloudy} />,
+      key: 'cloud',
+      label: (
+        <Link href={`${OFFICIAL_URL}?utm_source=${UTM_SOURCE}`} target={'_blank'}>
+          {t('userPanel.cloud', { name: LOBE_CHAT_CLOUD })}
+        </Link>
+      ),
+    },
+    {
+      icon: <Icon icon={FileClockIcon} />,
+      key: 'changelog',
+      label: <Link href={'/changelog/modal'}>{t('changelog')}</Link>,
+    },
+    {
+      children: [
+        {
+          icon: <Icon icon={Book} />,
+          key: 'docs',
           label: (
-            <Link href={`${OFFICIAL_URL}?utm_source=${UTM_SOURCE}`} target={'_blank'}>
-              {t('userPanel.cloud', { name: LOBE_CHAT_CLOUD })}
+            <Link href={DOCUMENTS_REFER_URL} target={'_blank'}>
+              {t('userPanel.docs')}
             </Link>
           ),
         },
         {
-          type: 'divider',
+          icon: <Icon icon={Feather} />,
+          key: 'feedback',
+          label: (
+            <Link href={GITHUB_ISSUES} target={'_blank'}>
+              {t('userPanel.feedback')}
+            </Link>
+          ),
         },
-      ].filter(Boolean) as ItemType[]);
+        {
+          icon: <Icon icon={DiscordIcon} />,
+          key: 'discord',
+          label: (
+            <Link href={DISCORD} target={'_blank'}>
+              {t('userPanel.discord')}
+            </Link>
+          ),
+        },
+        {
+          icon: <Icon icon={Mail} />,
+          key: 'email',
+          label: (
+            <Link href={mailTo(EMAIL_SUPPORT)} target={'_blank'}>
+              {t('userPanel.email')}
+            </Link>
+          ),
+        },
+      ],
+      icon: <Icon icon={LifeBuoy} />,
+      key: 'help',
+      label: t('userPanel.help'),
+    },
+    {
+      type: 'divider',
+    },
+  ].filter(Boolean) as ItemType[];
 
   const mainItems = [
     {
       type: 'divider',
     },
-    ...(isLogin ? settings : []),
     ...(isLoginWithClerk ? profile : []),
+    ...(isLogin ? settings : []),
     /* ↓ cloud slot ↓ */
 
     /* ↑ cloud slot ↑ */
     ...(canInstall ? pwa : []),
     ...data,
-    ...helps,
+    ...(!hideDocs ? helps : []),
   ].filter(Boolean) as MenuProps['items'];
 
   const logoutItems: MenuProps['items'] = isLoginWithAuth
