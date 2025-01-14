@@ -1,27 +1,24 @@
 'use client';
 
-import { ChatHeader } from '@lobehub/ui';
-import { rgba } from 'polished';
+import { ChatHeader } from '@lobehub/ui/chat';
+import Link from 'next/link';
 import { memo } from 'react';
-import { Center } from 'react-layout-kit';
 
+import { ProductLogo } from '@/components/Branding';
+import { isCustomBranding } from '@/const/version';
+
+import CreateButton from '../../features/CreateButton';
 import StoreSearchBar from '../../features/StoreSearchBar';
 
 const Header = memo(() => {
   return (
     <ChatHeader
       left={
-        <>
-          <Center style={{ color: 'black', fontSize: '1.43rem', fontWeight: 'bold' }}>
-            {' '}
-            {'FunChat'}{' '}
-          </Center>
-          <Center style={{ color: rgba(0, 0, 0, 0.12), fontSize: '1rem', fontStyle: 'oblique' }}>
-            /
-          </Center>
-          <Center style={{ color: 'black', fontSize: '1.43rem' }}>{'Discover'}</Center>
-        </>
+        <Link href={'/discover'} style={{ color: 'inherit' }}>
+          <ProductLogo extra={'Discover'} size={36} type={'text'} />
+        </Link>
       }
+      right={!isCustomBranding && <CreateButton />}
       style={{
         position: 'relative',
         zIndex: 10,
