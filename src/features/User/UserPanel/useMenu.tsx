@@ -39,8 +39,6 @@ import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfi
 import { useUserStore } from '@/store/user';
 import { authSelectors } from '@/store/user/selectors';
 
-import { useNewVersion } from './useNewVersion';
-
 const NewVersionBadge = memo(
   ({
     children,
@@ -65,7 +63,6 @@ const NewVersionBadge = memo(
 
 export const useMenu = () => {
   const { canInstall, install } = usePWAInstall();
-  const hasNewVersion = useNewVersion();
   const { t } = useTranslation(['common', 'setting', 'auth']);
   const { showCloudPromotion, hideDocs } = useServerConfigStore(featureFlagsSelectors);
   const [enableAuth, isLogin, isLoginWithAuth] = useUserStore((s) => [
@@ -88,7 +85,7 @@ export const useMenu = () => {
       key: 'setting',
       label: (
         <Link href={'/settings/common'}>
-          <NewVersionBadge showBadge={hasNewVersion}>{t('userPanel.setting')}</NewVersionBadge>
+          <NewVersionBadge showBadge={false}>{t('userPanel.setting')}</NewVersionBadge>
         </Link>
       ),
     },
