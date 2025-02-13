@@ -6,7 +6,7 @@ import { isCustomBranding } from '@/const/version';
 import CircleLoading from '../CircleLoading';
 
 export default () => {
-  if (isCustomBranding) return <CircleLoading />;
+  if (!isCustomBranding) return <CircleLoading />;
 
   return (
     <Center height={'100%'} width={'100%'}>
