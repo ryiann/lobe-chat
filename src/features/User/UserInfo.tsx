@@ -23,9 +23,10 @@ const useStyles = createStyles(({ css, token }) => ({
 
 export interface UserInfoProps extends FlexboxProps {
   avatarProps?: Partial<UserAvatarProps>;
+  onClick?: () => void;
 }
 
-const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
+const UserInfo = memo<UserInfoProps>(({ avatarProps, onClick, ...rest }) => {
   const { styles, theme } = useStyles();
   useUserStore(authSelectors.isLogin);
   return (
@@ -38,7 +39,7 @@ const UserInfo = memo<UserInfoProps>(({ avatarProps, ...rest }) => {
       paddingInline={12}
       {...rest}
     >
-      <Flexbox align={'center'} gap={12} horizontal>
+      <Flexbox align={'center'} gap={12} horizontal onClick={onClick}>
         <UserAvatar background={theme.colorFill} size={48} {...avatarProps} />
         <Flexbox flex={1} gap={6}>
           <div className={styles.nickname}>个人用户</div>
