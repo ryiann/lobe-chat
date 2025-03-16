@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FORM_STYLE } from '@/const/layoutTokens';
 import { INBOX_SESSION_ID } from '@/const/session';
+import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
 
 import { useStore } from '../store';
 import { SessionLoadingState } from '../store/initialState';
@@ -20,6 +21,8 @@ import BackgroundSwatches from './BackgroundSwatches';
 
 const AgentMeta = memo(() => {
   const { t } = useTranslation('setting');
+
+  const { isAgentEditable } = useServerConfigStore(featureFlagsSelectors);
 
   const [hasSystemRole, updateMeta, autocompleteMeta, autocompleteAllMeta] = useStore((s) => [
     !!s.config.systemRole,
@@ -139,7 +142,15 @@ const AgentMeta = memo(() => {
     title: t('settingAgent.title'),
   };
 
-  return <Form items={[metaData]} itemsType={'group'} variant={'pure'} {...FORM_STYLE} />;
+  return (
+    <Form
+      disabled={!isAgentEditable}
+      items={[metaData]}
+      itemsType={'group'}
+      variant={'pure'}
+      {...FORM_STYLE}
+    />
+  );
 });
 
 export default AgentMeta;
