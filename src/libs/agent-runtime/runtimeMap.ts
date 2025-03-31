@@ -6,6 +6,7 @@ import { LobeAzureAI } from './azureai';
 import { LobeBaichuanAI } from './baichuan';
 import LobeBedrockAI from './bedrock';
 import { LobeCloudflareAI } from './cloudflare';
+import { LobeCohereAI } from './cohere';
 import { LobeDeepSeekAI } from './deepseek';
 import { LobeFireworksAI } from './fireworksai';
 import { LobeGiteeAI } from './giteeai';
@@ -15,6 +16,7 @@ import { LobeGroq } from './groq';
 import { LobeHigressAI } from './higress';
 import { LobeHuggingFaceAI } from './huggingface';
 import { LobeHunyuanAI } from './hunyuan';
+import { LobeInfiniAI } from './infiniai';
 import { LobeInternLMAI } from './internlm';
 import { LobeJinaAI } from './jina';
 import { LobeLMStudioAI } from './lmstudio';
@@ -30,6 +32,7 @@ import { LobePerplexityAI } from './perplexity';
 import { LobePPIOAI } from './ppio';
 import { LobeQwenAI } from './qwen';
 import { LobeSambaNovaAI } from './sambanova';
+import { LobeSearch1API } from './search1api';
 import { LobeSenseNovaAI } from './sensenova';
 import { LobeSiliconCloudAI } from './siliconcloud';
 import { LobeSparkAI } from './spark';
@@ -42,6 +45,7 @@ import { LobeVLLMAI } from './vllm';
 import { LobeVolcengineAI } from './volcengine';
 import { LobeWenxinAI } from './wenxin';
 import { LobeXAI } from './xai';
+import { LobeXinferenceAI } from './xinference';
 import { LobeZeroOneAI } from './zeroone';
 import { LobeZhipuAI } from './zhipu';
 
@@ -54,6 +58,7 @@ export const providerRuntimeMap = {
   baichuan: LobeBaichuanAI,
   bedrock: LobeBedrockAI,
   cloudflare: LobeCloudflareAI,
+  cohere: LobeCohereAI,
   deepseek: LobeDeepSeekAI,
   doubao: LobeVolcengineAI,
   fireworksai: LobeFireworksAI,
@@ -64,6 +69,7 @@ export const providerRuntimeMap = {
   higress: LobeHigressAI,
   huggingface: LobeHuggingFaceAI,
   hunyuan: LobeHunyuanAI,
+  infiniai: LobeInfiniAI,
   internlm: LobeInternLMAI,
   jina: LobeJinaAI,
   lmstudio: LobeLMStudioAI,
@@ -79,6 +85,7 @@ export const providerRuntimeMap = {
   ppio: LobePPIOAI,
   qwen: LobeQwenAI,
   sambanova: LobeSambaNovaAI,
+  search1api: LobeSearch1API,
   sensenova: LobeSenseNovaAI,
   siliconcloud: LobeSiliconCloudAI,
   spark: LobeSparkAI,
@@ -91,6 +98,7 @@ export const providerRuntimeMap = {
   volcengine: LobeVolcengineAI,
   wenxin: LobeWenxinAI,
   xai: LobeXAI,
+  xinference: LobeXinferenceAI,
   zeroone: LobeZeroOneAI,
   zhipu: LobeZhipuAI,
 };
