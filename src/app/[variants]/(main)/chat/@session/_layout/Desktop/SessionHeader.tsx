@@ -5,9 +5,8 @@ import { createStyles } from 'antd-style';
 import { MessageSquarePlus } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flexbox } from 'react-layout-kit';
+import { Center, Flexbox } from 'react-layout-kit';
 
-import { ProductLogo } from '@/components/Branding';
 import { DESKTOP_HEADER_ICON_SIZE } from '@/const/layoutTokens';
 import SyncStatusTag from '@/features/SyncStatusInspector';
 import { useActionSWR } from '@/libs/swr';
@@ -39,7 +38,9 @@ const Header = memo(() => {
     <Flexbox className={styles.top} gap={16} padding={16}>
       <Flexbox distribution={'space-between'} horizontal>
         <Flexbox align={'center'} gap={4} horizontal>
-          <ProductLogo className={styles.logo} size={36} type={'text'} />
+          <Center style={{ color: 'black', fontSize: '1.4rem', fontWeight: 'bold' }}>
+            {'FunChat'}
+          </Center>
           {enableWebrtc && <SyncStatusTag />}
         </Flexbox>
         {showCreateSession && (
