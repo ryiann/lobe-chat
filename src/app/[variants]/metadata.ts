@@ -28,9 +28,9 @@ export const generateMetadata = async (props: DynamicLayoutProps) => {
     icons: isCustomBranding
       ? BRANDING_LOGO_URL
       : {
-          apple: '/apple-touch-icon.png?v=1',
-          icon: '/favicon.ico?v=1',
-          shortcut: '/favicon-32x32.ico?v=1',
+          apple: 'https://cdn.funtui.com/apple-touch-icon.png?v=1',
+          icon: 'https://cdn.funtui.com/favicon.ico?v=1',
+          shortcut: 'https://cdn.funtui.com/favicon-32x32.ico?v=1',
         },
     manifest: noManifest ? undefined : '/manifest.json',
     metadataBase: new URL(OFFICIAL_URL),
