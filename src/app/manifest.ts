@@ -11,7 +11,7 @@ const manifest = (): MetadataRoute.Manifest | any => {
       {
         purpose: 'any',
         sizes: '192x192',
-        url: '/icons/icon-192x192.png',
+        url: 'https://cdn.funtui.com/icon-192x192.png',
       },
       {
         purpose: 'maskable',
@@ -21,7 +21,7 @@ const manifest = (): MetadataRoute.Manifest | any => {
       {
         purpose: 'any',
         sizes: '512x512',
-        url: '/icons/icon-512x512.png',
+        url: 'https://cdn.funtui.com/icon-512x512.png',
       },
       {
         purpose: 'maskable',
