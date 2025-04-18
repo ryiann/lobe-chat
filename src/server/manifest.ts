@@ -1,6 +1,6 @@
 import qs from 'query-string';
 
-import { BRANDING_LOGO_URL } from '@/const/branding';
+import { CUSTOM_BRANDING_LOGO_URL } from '@/const/branding';
 import { getCanonicalUrl } from '@/server/utils/url';
 
 const MAX_AGE = 31_536_000;
@@ -77,7 +77,7 @@ export class Manifest {
     cache_busting_mode: 'query',
     immutable: 'true',
     max_age: MAX_AGE,
-    src: qs.stringifyUrl({ query: { v: version }, url: BRANDING_LOGO_URL || url }),
+    src: qs.stringifyUrl({ query: { v: version }, url: CUSTOM_BRANDING_LOGO_URL || url }),
   });
 
   private _getIcon = ({ url, version, sizes, purpose }: IconItem) => ({
