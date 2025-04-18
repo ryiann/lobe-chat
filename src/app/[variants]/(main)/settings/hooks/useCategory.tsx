@@ -136,7 +136,9 @@ export const useCategory = () => {
             </Link>
           ),
         },
-      ].filter(Boolean) as MenuProps['items'],
+      ]
+        .filter(Boolean)
+        .filter((item) => item && item.key !== SettingsTabs.About) as MenuProps['items'],
     [t, enableWebrtc, showLLM],
   );
 
