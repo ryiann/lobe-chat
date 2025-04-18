@@ -116,6 +116,7 @@ export const useCategory = () => {
     },
   ].filter(Boolean) as CellProps[];
 
+  const hideHelps = !!hideDocs;
   const mainItems = [
     {
       type: 'divider',
@@ -127,7 +128,7 @@ export const useCategory = () => {
     /* ↑ cloud slot ↑ */
     ...(canInstall ? pwa : []),
     ...(isLogin && !isServerMode ? data : []),
-    ...(!hideDocs ? helps : []),
+    ...(!hideDocs && hideHelps ? helps : []),
   ].filter(Boolean) as CellProps[];
 
   return mainItems;
