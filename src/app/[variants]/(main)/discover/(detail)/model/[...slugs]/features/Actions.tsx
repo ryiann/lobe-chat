@@ -25,6 +25,7 @@ const ModelActions = memo<ModelActionsProps>(({ identifier, providerData, data }
     <Flexbox align={'center'} gap={8} horizontal>
       <ChatWithModel providerData={providerData} providers={data.providers} />
       <ShareButton
+        disabled={true}
         meta={{
           avatar: <ModelIcon model={identifier} size={64} type={'avatar'} />,
           desc: data.meta.description && t(`${identifier}.description`),

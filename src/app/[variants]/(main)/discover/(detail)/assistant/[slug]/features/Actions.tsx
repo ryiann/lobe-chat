@@ -20,6 +20,7 @@ const AssistantAction = memo<AssistantActionProps>(({ identifier, data }) => {
     <Flexbox align={'center'} gap={8} horizontal>
       <AddAgent data={data} />
       <ShareButton
+        disabled={true}
         meta={{
           avatar: data.meta.avatar,
           desc: data.meta.description,

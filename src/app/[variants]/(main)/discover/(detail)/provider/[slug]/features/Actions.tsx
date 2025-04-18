@@ -24,6 +24,7 @@ const ProviderActions = memo<ModelActionsProps>(({ identifier, data }) => {
     <Flexbox align={'center'} gap={8} horizontal width={'100%'}>
       <ProviderConfig data={data} identifier={identifier} />
       <ShareButton
+        disabled={true}
         meta={{
           avatar: <ProviderIcon provider={identifier} size={64} type={'avatar'} />,
           desc: data.meta.description && t(`${identifier}.description`),

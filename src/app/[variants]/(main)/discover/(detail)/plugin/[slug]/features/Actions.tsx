@@ -20,6 +20,7 @@ const PluginActions = memo<PluginActionsProps>(({ identifier, data }) => {
     <Flexbox align={'center'} gap={8} horizontal>
       <InstallTool identifier={identifier} />
       <ShareButton
+        disabled={true}
         meta={{
           avatar: data.meta.avatar,
           desc: data.meta.description,
