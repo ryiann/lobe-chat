@@ -184,7 +184,9 @@ export const useMenu = () => {
     {
       type: 'divider',
     },
-  ].filter(Boolean) as ItemType[];
+  ]
+    .filter(Boolean)
+    .filter((item) => item && item.key !== 'help' && item.key !== 'changelog') as ItemType[];
 
   const mainItems = [
     {
