@@ -14,12 +14,12 @@ const BottomActions = memo(() => {
   return (
     <>
       {!hideGitHub && (
-        <Link aria-label={'GitHub'} href={GITHUB} target={'_blank'}>
+        <Link aria-label={'GitHub'} hidden={true} href={GITHUB} target={'_blank'}>
           <ActionIcon icon={Github} placement={'right'} title={'GitHub'} />
         </Link>
       )}
       {!hideDocs && (
-        <Link aria-label={t('document')} href={DOCUMENTS_REFER_URL} target={'_blank'}>
+        <Link aria-label={t('document')} hidden={true} href={DOCUMENTS_REFER_URL} target={'_blank'}>
           <ActionIcon icon={Book} placement={'right'} title={t('document')} />
         </Link>
       )}
