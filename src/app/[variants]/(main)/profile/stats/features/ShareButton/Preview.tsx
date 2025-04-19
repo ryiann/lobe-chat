@@ -140,7 +140,7 @@ const Preview = memo(() => {
               <TotalWords inShare />
             </Grid>
           </Flexbox>
-          <div className={styles.footer}>
+          <div className={styles.footer} hidden={true}>
             {isOfficial ? (
               OFFICIAL_URL
             ) : (

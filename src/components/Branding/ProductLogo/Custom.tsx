@@ -5,7 +5,7 @@ import Image, { ImageProps } from 'next/image';
 import { ReactNode, forwardRef, memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import { BRANDING_LOGO_URL, BRANDING_NAME } from '@/const/branding';
+import { BRANDING_NAME, CUSTOM_BRANDING_LOGO_URL } from '@/const/branding';
 
 const useStyles = createStyles(({ css }) => {
   return {
@@ -39,7 +39,7 @@ const CustomImageLogo = memo<Omit<ImageProps, 'alt' | 'src'> & { size: number }>
       <Image
         alt={BRANDING_NAME}
         height={size}
-        src={BRANDING_LOGO_URL}
+        src={CUSTOM_BRANDING_LOGO_URL}
         unoptimized={true}
         width={size}
         {...rest}
