@@ -1,4 +1,5 @@
 import { LobeChatPluginApi, LobeChatPluginManifest, PluginSchema } from '@lobehub/chat-plugin-sdk';
+import { McpError } from '@modelcontextprotocol/sdk/types.js';
 import { TRPCError } from '@trpc/server';
 import debug from 'debug';
 
@@ -61,6 +62,12 @@ class MCPService {
 
       return result;
     } catch (error) {
+      if (error instanceof McpError) {
+        const mcpError = error as McpError;
+
+        return mcpError.message;
+      }
+
       console.error(`Error calling tool "${toolName}" for params %O:`, params, error);
       // Propagate a TRPCError
       throw new TRPCError({
@@ -138,6 +145,25 @@ class MCPService {
     url: string,
   ): Promise<LobeChatPluginManifest> {
     const tools = await this.listTools({ name: identifier, type: 'http', url }); // Get client using params
+
+    return {
+      api: tools,
+      identifier,
+      meta: {
+        avatar: 'MCP_AVATAR',
+        description: `${identifier} MCP server has ${tools.length} tools, like "${tools[0]?.name}"`,
+        title: identifier,
+      },
+      // TODO: temporary
+      type: 'mcp' as any,
+    };
+  }
+  async getStdioMcpServerManifest(
+    identifier: string,
+    command: string,
+    args: string[],
+  ): Promise<LobeChatPluginManifest> {
+    const tools = await this.listTools({ args, command, name: identifier, type: 'stdio' }); // Get client using params
 
     return {
       api: tools,
