@@ -1,4 +1,4 @@
-import { ModelSpeed, ModelTokensUsage } from '@/types/message';
+import { CitationItem, ModelSpeed, ModelTokensUsage } from '@/types/message';
 import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import { AgentRuntimeErrorType } from '../../error';
@@ -16,6 +16,17 @@ export interface StreamContext {
    * Same as Hunyuan and Wenxin
    */
   returnedCitation?: boolean;
+  /**
+   * Claude's citations are inline and interleaved with text output.
+   * Each text segment may carry references to sources (e.g., web search results)
+   * relevant to that specific portion of the generated content.
+   * This array accumulates all citation items received during the streaming response.
+   */
+  returnedCitationArray?: CitationItem[];
+  /**
+   * O series models need a condition to separate part
+   */
+  startReasoning?: boolean;
   thinking?: {
     id: string;
     name: string;
@@ -71,7 +82,6 @@ export interface StreamToolCallChunkData {
 export interface StreamProtocolToolCallChunk {
   data: StreamToolCallChunkData[];
   id: string;
-  index: number;
   type: 'tool_calls';
 }
 
