@@ -328,7 +328,7 @@ LobeChat 的插件生态系统是其核心功能的重要扩展，它极大地�
 | [必应网页搜索](https://lobechat.com/discover/plugin/Bingsearch-identifier)<br/><sup>By **FineHow** on **2024-12-22**</sup> | 通过 BingApi 搜索互联网上的信息<br/>`bingsearch`                                   |
 | [谷歌自定义搜索引擎](https://lobechat.com/discover/plugin/google-cse)<br/><sup>By **vsnthdev** on **2024-12-02**</sup>     | 通过他们的官方自定义搜索引擎 API 搜索谷歌。<br/>`网络` `搜索`                      |
 
-> 📊 Total plugins: [<kbd>**43**</kbd>](https://lobechat.com/discover/plugins)
+> 📊 Total plugins: [<kbd>**42**</kbd>](https://lobechat.com/discover/plugins)
 
  <!-- PLUGIN LIST -->
 
@@ -359,11 +359,11 @@ LobeChat 的插件生态系统是其核心功能的重要扩展，它极大地�
 | 最近新增                                                                                                                                                              | 描述                                                                                          |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | [学术论文阅读导师](https://lobechat.com/discover/assistant/paper-understanding)<br/><sup>By **[AdijeShen](https://github.com/AdijeShen)** on **2025-05-09**</sup>     | 擅长将复杂学术论文通俗易懂讲解<br/>`学术知道` `论文解析`                                      |
-| [营养顾问](https://lobechat.com/discover/assistant/nutritionist)<br/><sup>By **[egornomic](https://github.com/egornomic)** on **2025-04-15**</sup>                    | 专注于提供食品的详细营养信息。<br/>`营养` `食品` `健康` `信息`                                |
+| [营养顾问](https://lobechat.com/discover/assistant/nutritionist)<br/><sup>By **[egornomic](https://github.com/egornomic)** on **2025-04-15**</sup>                    | 专注于提供食品项目的详细营养信息。<br/>`营养` `食品` `健康` `信息`                            |
 | [改写为翻译腔](https://lobechat.com/discover/assistant/rewrite-in-a-translation-tone)<br/><sup>By **[q2019715](https://github.com/q2019715)** on **2025-03-13**</sup> | 将一段话重写为翻译腔<br/>`翻译腔` `创意写作` `语言风格` `文段重写` `文化`                     |
 | [学术论文综述专家](https://lobechat.com/discover/assistant/academic-paper-overview)<br/><sup>By **[arvinxx](https://github.com/arvinxx)** on **2025-03-11**</sup>     | 擅长高质量文献检索与分析的学术研究助手<br/>`学术研究` `文献检索` `数据分析` `信息提取` `咨询` |
 
-> 📊 Total agents: [<kbd>**501**</kbd> ](https://lobechat.com/discover/assistants)
+> 📊 Total agents: [<kbd>**499**</kbd> ](https://lobechat.com/discover/assistants)
 
  <!-- AGENT LIST -->
 
