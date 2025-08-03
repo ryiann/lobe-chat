@@ -4,6 +4,7 @@ import {
   GenerateContentConfig,
   Tool as GoogleFunctionCallTool,
   GoogleGenAI,
+  HttpOptions,
   Part,
   Type as SchemaType,
   ThinkingConfig,
@@ -21,6 +22,7 @@ import {
   OpenAIChatMessage,
   UserMessageContentPart,
 } from '../types';
+import { CreateImagePayload, CreateImageResponse } from '../types/image';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { StreamingResponse } from '../utils/response';
@@ -77,6 +79,7 @@ interface LobeGoogleAIParams {
   apiKey?: string;
   baseURL?: string;
   client?: GoogleGenAI;
+  defaultHeaders?: Record<string, any>;
   id?: string;
   isVertexAi?: boolean;
 }
@@ -99,10 +102,19 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   apiKey?: string;
   provider: string;
 
-  constructor({ apiKey, baseURL, client, isVertexAi, id }: LobeGoogleAIParams = {}) {
+  constructor({
+    apiKey,
+    baseURL,
+    client,
+    isVertexAi,
+    id,
+    defaultHeaders,
+  }: LobeGoogleAIParams = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
 
-    const httpOptions = baseURL ? { baseUrl: baseURL } : undefined;
+    const httpOptions = baseURL
+      ? ({ baseUrl: baseURL, headers: defaultHeaders } as HttpOptions)
+      : undefined;
 
     this.apiKey = apiKey;
     this.client = client ? client : new GoogleGenAI({ apiKey, httpOptions });
@@ -240,6 +252,52 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       const { errorType, error } = this.parseErrorMessage(err.message);
 
       throw AgentRuntimeError.chat({ error, errorType, provider: this.provider });
+    }
+  }
+
+  /**
+   * Generate images using Google AI Imagen API
+   * @see https://ai.google.dev/gemini-api/docs/image-generation#imagen
+   */
+  async createImage(payload: CreateImagePayload): Promise<CreateImageResponse> {
+    try {
+      const { model, params } = payload;
+
+      const response = await this.client.models.generateImages({
+        config: {
+          aspectRatio: params.aspectRatio,
+          numberOfImages: 1,
+        },
+        model,
+        prompt: params.prompt,
+      });
+
+      if (!response.generatedImages || response.generatedImages.length === 0) {
+        throw new Error('No images generated');
+      }
+
+      const generatedImage = response.generatedImages[0];
+      if (!generatedImage.image || !generatedImage.image.imageBytes) {
+        throw new Error('Invalid image data');
+      }
+
+      const { imageBytes } = generatedImage.image;
+      // 1. official doc use png as example
+      // 2. no responseType param support like openai now.
+      // I think we can just hard code png now
+      const imageUrl = `data:image/png;base64,${imageBytes}`;
+
+      return { imageUrl };
+    } catch (error) {
+      const err = error as Error;
+      console.error('Google AI image generation error:', err);
+
+      const { errorType, error: parsedError } = this.parseErrorMessage(err.message);
+      throw AgentRuntimeError.createImage({
+        error: parsedError,
+        errorType,
+        provider: this.provider,
+      });
     }
   }
 
