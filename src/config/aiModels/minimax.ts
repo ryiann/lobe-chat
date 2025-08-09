@@ -15,8 +15,10 @@ const minimaxChatModels: AIChatModelCard[] = [
     maxOutput: 40_000,
     pricing: {
       currency: 'CNY',
-      input: 1.2, // 输入长度 32-128k
-      output: 16,
+      units: [
+        { name: 'textInput', rate: 1.2, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 16, strategy: 'fixed', unit: 'millionTokens' },
+      ],
     },
     releasedAt: '2025-06-16',
     settings: {
@@ -39,8 +41,10 @@ const minimaxChatModels: AIChatModelCard[] = [
     maxOutput: 40_000,
     pricing: {
       currency: 'CNY',
-      input: 1,
-      output: 8,
+      units: [
+        { name: 'textInput', rate: 1, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 8, strategy: 'fixed', unit: 'millionTokens' },
+      ],
     },
     releasedAt: '2025-01-15',
     settings: {
@@ -52,8 +56,7 @@ const minimaxChatModels: AIChatModelCard[] = [
 
 const minimaxImageModels: AIImageModelCard[] = [
   {
-    description:
-      '全新图像生成模型，画面表现细腻，支持文生图、图生图',
+    description: '全新图像生成模型，画面表现细腻，支持文生图、图生图',
     displayName: 'Image 01',
     enabled: true,
     id: 'image-01',
@@ -71,8 +74,7 @@ const minimaxImageModels: AIImageModelCard[] = [
     type: 'image',
   },
   {
-    description:
-      '图像生成模型，画面表现细腻，支持文生图并进行画风设置',
+    description: '图像生成模型，画面表现细腻，支持文生图并进行画风设置',
     displayName: 'Image 01 Live',
     enabled: true,
     id: 'image-01-live',

@@ -14,8 +14,10 @@ const v0ChatModels: AIChatModelCard[] = [
     id: 'v0-1.5-lg',
     maxOutput: 32_000,
     pricing: {
-      input: 15,
-      output: 75,
+      units: [
+        { name: 'textInput', rate: 15, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 75, strategy: 'fixed', unit: 'millionTokens' },
+      ],
     },
     type: 'chat',
   },
@@ -32,8 +34,10 @@ const v0ChatModels: AIChatModelCard[] = [
     id: 'v0-1.5-md',
     maxOutput: 32_000,
     pricing: {
-      input: 3,
-      output: 15,
+      units: [
+        { name: 'textInput', rate: 3, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 15, strategy: 'fixed', unit: 'millionTokens' },
+      ],
     },
     type: 'chat',
   },
@@ -48,8 +52,10 @@ const v0ChatModels: AIChatModelCard[] = [
     id: 'v0-1.0-md',
     maxOutput: 32_000,
     pricing: {
-      input: 3,
-      output: 15,
+      units: [
+        { name: 'textInput', rate: 3, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 15, strategy: 'fixed', unit: 'millionTokens' },
+      ],
     },
     type: 'chat',
   },
