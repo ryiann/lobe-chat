@@ -3,8 +3,8 @@ import type { Stream } from 'openai/streaming';
 
 import { ChatMessageError, CitationItem } from '@/types/message';
 
-import { AgentRuntimeErrorType, ILobeAgentRuntimeErrorType } from '../../../error';
 import { ChatStreamCallbacks } from '../../../types';
+import { AgentRuntimeErrorType, ILobeAgentRuntimeErrorType } from '../../../types/error';
 import { convertUsage } from '../../usageConverter';
 import {
   FIRST_CHUNK_ERROR_KEY,
@@ -94,6 +94,36 @@ const transformOpenAIStream = (
           type: 'tool_calls',
         } as StreamProtocolToolCallChunk;
       }
+    }
+
+    // Handle image preview chunks (e.g. Gemini 2.5 flash image preview)
+    // Example shape:
+    // choices[0].delta.images = [{ type: 'image_url', image_url: { url: 'data:image/png;base64,...' }, index: 0 }]
+    if (
+      (item as any).delta &&
+      Array.isArray((item as any).delta.images) &&
+      (item as any).delta.images.length > 0
+    ) {
+      const images = (item as any).delta.images as any[];
+
+      return images
+        .map((img) => {
+          // support multiple possible shapes for the url
+          const url =
+            img?.image_url?.url ||
+            img?.image_url?.image_url?.url ||
+            img?.url ||
+            (typeof img === 'string' ? img : undefined);
+
+          if (!url) return null;
+
+          return {
+            data: url,
+            id: chunk.id,
+            type: 'base64_image',
+          } as StreamProtocolChunk;
+        })
+        .filter(Boolean) as StreamProtocolChunk[];
     }
 
     // 给定结束原因
@@ -231,6 +261,12 @@ const transformOpenAIStream = (
           streamContext.thinkingInContent = true;
         } else if (content.includes('</think>')) {
           streamContext.thinkingInContent = false;
+        }
+
+        // 如果 content 是空字符串但 chunk 带有 usage，则优先返回 usage（例如 Gemini image-preview 最终会在单独的 chunk 中返回 usage）
+        if (content === '' && chunk.usage) {
+          const usage = chunk.usage;
+          return { data: convertUsage(usage, provider), id: chunk.id, type: 'usage' };
         }
 
         // 判断是否有 citations 内容，更新 returnedCitation 状态

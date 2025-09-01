@@ -1,6 +1,7 @@
+import { MAX_SEED } from 'model-bank';
 import { describe, expect, it, vi } from 'vitest';
 
-import { MAX_SEED, calculateThumbnailDimensions, generateUniqueSeeds } from './number';
+import { calculateThumbnailDimensions, generateUniqueSeeds } from './number';
 
 describe('number utilities', () => {
   describe('MAX_SEED constant', () => {

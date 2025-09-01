@@ -1,13 +1,13 @@
 import Anthropic, { ClientOptions } from '@anthropic-ai/sdk';
 
 import { LobeRuntimeAI } from '../BaseAI';
-import { AgentRuntimeErrorType } from '../error';
 import {
   type ChatCompletionErrorPayload,
   ChatMethodOptions,
   ChatStreamPayload,
   ModelProvider,
 } from '../types';
+import { AgentRuntimeErrorType } from '../types/error';
 import { buildAnthropicMessages, buildAnthropicTools } from '../utils/anthropicHelpers';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
@@ -120,7 +120,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       enabledSearch,
     } = payload;
 
-    const { default: anthropicModels } = await import('@/config/aiModels/anthropic');
+    const { anthropic: anthropicModels } = await import('model-bank');
     const modelConfig = anthropicModels.find((m) => m.id === model);
     const defaultMaxOutput = modelConfig?.maxOutput;
 

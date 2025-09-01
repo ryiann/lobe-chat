@@ -1,8 +1,6 @@
+import { IMAGE_GENERATION_CONFIG, MAX_SEED } from 'model-bank';
 import prand from 'pure-rand';
 
-import { IMAGE_GENERATION_CONFIG } from '@/const/imageGeneration';
-
-export const MAX_SEED = 2 ** 31 - 1;
 export function generateUniqueSeeds(seedCount: number): number[] {
   // Use current timestamp as the initial seed
   const initialSeed = Date.now();
