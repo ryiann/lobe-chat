@@ -4,8 +4,6 @@ import { useUserStore } from '@/store/user';
 import { userProfileSelectors } from '@/store/user/selectors';
 import { uuid } from '@/utils/uuid';
 
-import { uuid } from '../uuid';
-
 const placeholderVariablesRegex = /{{(.*?)}}/g;
 
 /* eslint-disable sort-keys-fix/sort-keys-fix */
