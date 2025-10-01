@@ -1,13 +1,18 @@
 /**
  * @see https://github.com/lobehub/lobe-chat/discussions/6563
  */
+import type { ChatModelCard } from '@lobechat/types';
 import OpenAI, { ClientOptions } from 'openai';
 import { Stream } from 'openai/streaming';
 
-import type { ChatModelCard } from '@/types/llm';
-
 import { LobeOpenAI } from '../../providers/openai';
-import { CreateImagePayload, CreateImageResponse, ILobeAgentRuntimeErrorType } from '../../types';
+import {
+  CreateImagePayload,
+  CreateImageResponse,
+  GenerateObjectOptions,
+  GenerateObjectPayload,
+  ILobeAgentRuntimeErrorType,
+} from '../../types';
 import {
   type ChatCompletionErrorPayload,
   ChatMethodOptions,
@@ -124,7 +129,7 @@ export const createRouterRuntime = ({
   ...params
 }: CreateRouterRuntimeOptions) => {
   return class UniformRuntime implements LobeRuntimeAI {
-    private _options: ClientOptions & Record<string, any>;
+    public _options: ClientOptions & Record<string, any>;
     private _routers: Routers;
     private _params: any;
     private _id: string;
@@ -143,7 +148,7 @@ export const createRouterRuntime = ({
     }
 
     /**
-     * TODO: routers 如果是静态对象，可以提前生成 runtimes, 避免运行时生成开销
+     * TODO: 考虑添加缓存机制，避免重复创建相同配置的 runtimes
      */
     private async createRuntimesByRouters(model?: string): Promise<RuntimeItem[]> {
       // 动态获取 routers，支持传入 model
@@ -176,9 +181,11 @@ export const createRouterRuntime = ({
       for (const runtimeItem of runtimes) {
         const models = runtimeItem.models || [];
         if (models.includes(model)) {
+          console.log(`get runtime ${runtimeItem.id} ${model}`);
           return runtimeItem.runtime;
         }
       }
+
       return runtimes.at(-1)!.runtime;
     }
 
@@ -197,6 +204,11 @@ export const createRouterRuntime = ({
 
         throw e;
       }
+    }
+
+    async generateObject(payload: GenerateObjectPayload, options?: GenerateObjectOptions) {
+      const runtime = await this.getRuntimeByModel(payload.model);
+      return runtime.generateObject!(payload, options);
     }
 
     async createImage(payload: CreateImagePayload) {
