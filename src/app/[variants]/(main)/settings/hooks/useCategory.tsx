@@ -4,6 +4,7 @@ import {
   Brain,
   Database,
   EthernetPort,
+  Image as ImageIcon,
   Info,
   KeyboardIcon,
   Mic2,
@@ -57,7 +58,11 @@ export const useCategory = () => {
                 key: SettingsTabs.Provider,
                 label: t('tab.provider'),
               }),
-
+        {
+          icon: <Icon icon={ImageIcon} />,
+          key: SettingsTabs.Image,
+          label: t('tab.image'),
+        },
         enableSTT && {
           icon: <Icon icon={Mic2} />,
           key: SettingsTabs.TTS,
@@ -86,10 +91,8 @@ export const useCategory = () => {
           key: SettingsTabs.About,
           label: t('tab.about'),
         },
-      ]
-        .filter(Boolean)
-        .filter((item) => item && item.key !== SettingsTabs.About) as MenuProps['items'],
-    [t, showLLM],
+      ].filter(Boolean) as MenuProps['items'],
+    [t, showLLM, enableSTT, hideDocs, mobile],
   );
 
   return cateItems;
