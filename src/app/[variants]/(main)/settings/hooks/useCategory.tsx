@@ -91,7 +91,9 @@ export const useCategory = () => {
           key: SettingsTabs.About,
           label: t('tab.about'),
         },
-      ].filter(Boolean) as MenuProps['items'],
+      ]
+        .filter(Boolean)
+        .filter((item) => item && item.key !== SettingsTabs.About) as MenuProps['items'],
     [t, showLLM, enableSTT, hideDocs, mobile],
   );
 

@@ -5,9 +5,8 @@ import { createStyles } from 'antd-style';
 import { Bot, MessageSquarePlus, SquarePlus, Users } from 'lucide-react';
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flexbox } from 'react-layout-kit';
+import { Center, Flexbox } from 'react-layout-kit';
 
-import { ProductLogo } from '@/components/Branding';
 import { ChatGroupWizard } from '@/components/ChatGroupWizard';
 import { useGroupTemplates } from '@/components/ChatGroupWizard/templates';
 import { DESKTOP_HEADER_ICON_SIZE } from '@/const/layoutTokens';
@@ -212,7 +211,9 @@ const Header = memo(() => {
             paddingTop: 2,
           }}
         >
-          <ProductLogo className={styles.logo} size={36} type={'text'} />
+          <Center style={{ color: 'black', fontSize: '1.4rem', fontWeight: 'bold' }}>
+            {'FunChat'}
+          </Center>
         </Flexbox>
         <Flexbox align={'center'} gap={4} horizontal>
           <TogglePanelButton />

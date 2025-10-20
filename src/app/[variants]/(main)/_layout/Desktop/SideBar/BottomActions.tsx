@@ -22,7 +22,7 @@ const BottomActions = memo(() => {
   return (
     <Flexbox gap={8}>
       {!hideGitHub && (
-        <Link aria-label={'GitHub'} href={GITHUB} target={'_blank'}>
+        <Link aria-label={'GitHub'} hidden={true} href={GITHUB} target={'_blank'}>
           <ActionIcon
             icon={Github}
             size={ICON_SIZE}
@@ -31,7 +31,7 @@ const BottomActions = memo(() => {
           />
         </Link>
       )}
-      <Link aria-label={t('labs')} href={'/labs'}>
+      <Link aria-label={t('labs')} hidden={true} href={'/labs'}>
         <ActionIcon
           icon={FlaskConical}
           size={ICON_SIZE}
