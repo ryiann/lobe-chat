@@ -1,13 +1,12 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix  */
+import type { ChatTopicMetadata } from '@lobechat/types';
 import { boolean, index, jsonb, pgTable, primaryKey, text, uniqueIndex } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-
-import { ChatTopicMetadata } from '@/types/topic';
 
 import { idGenerator } from '../utils/idGenerator';
 import { createdAt, timestamps, timestamptz } from './_helpers';
 import { chatGroups } from './chatGroup';
-import { documents } from './document';
+import { documents } from './file';
 import { sessions } from './session';
 import { users } from './user';
 
@@ -33,6 +32,8 @@ export const topics = pgTable(
     uniqueIndex('topics_client_id_user_id_unique').on(t.clientId, t.userId),
     index('topics_user_id_idx').on(t.userId),
     index('topics_id_user_id_idx').on(t.id, t.userId),
+    index('topics_session_id_idx').on(t.sessionId),
+    index('topics_group_id_idx').on(t.groupId),
   ],
 );
 
@@ -48,12 +49,17 @@ export const threads = pgTable(
       .primaryKey(),
 
     title: text('title'),
-    type: text('type', { enum: ['continuation', 'standalone'] }).notNull(),
-    status: text('status', { enum: ['active', 'deprecated', 'archived'] }).default('active'),
+    content: text('content'),
+    editor_data: jsonb('editor_data'),
+    type: text('type', { enum: ['continuation', 'standalone', 'isolation'] }).notNull(),
+    status: text('status', {
+      enum: ['active', 'processing', 'pending', 'inReview', 'todo', 'cancel'],
+    }),
+
     topicId: text('topic_id')
       .references(() => topics.id, { onDelete: 'cascade' })
       .notNull(),
-    sourceMessageId: text('source_message_id').notNull(),
+    sourceMessageId: text('source_message_id'),
     // @ts-ignore
     parentThreadId: text('parent_thread_id').references(() => threads.id, { onDelete: 'set null' }),
     clientId: text('client_id'),
@@ -65,7 +71,10 @@ export const threads = pgTable(
     lastActiveAt: timestamptz('last_active_at').defaultNow(),
     ...timestamps,
   },
-  (t) => [uniqueIndex('threads_client_id_user_id_unique').on(t.clientId, t.userId)],
+  (t) => [
+    uniqueIndex('threads_client_id_user_id_unique').on(t.clientId, t.userId),
+    index('threads_topic_id_idx').on(t.topicId),
+  ],
 );
 
 export type NewThread = typeof threads.$inferInsert;
@@ -73,7 +82,7 @@ export type ThreadItem = typeof threads.$inferSelect;
 export const insertThreadSchema = createInsertSchema(threads);
 
 /**
- * 文档与话题关联表 - 实现文档和话题的多对多关系
+ * Document-Topic association table - Implements many-to-many relationship between documents and topics
  */
 export const topicDocuments = pgTable(
   'topic_documents',

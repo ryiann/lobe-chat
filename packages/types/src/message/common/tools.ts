@@ -4,10 +4,22 @@ import { z } from 'zod';
 
 import { LobeToolRenderType } from '../../tool';
 
+// ToolIntervention must be defined first to avoid circular dependency
+export interface ToolIntervention {
+  rejectedReason?: string;
+  status?: 'pending' | 'approved' | 'rejected' | 'aborted' | 'none';
+}
+
+export const ToolInterventionSchema = z.object({
+  rejectedReason: z.string().optional(),
+  status: z.enum(['pending', 'approved', 'rejected', 'aborted', 'none']).optional(),
+});
+
 export interface ChatPluginPayload {
   apiName: string;
   arguments: string;
   identifier: string;
+  intervention?: ToolIntervention;
   type: LobeToolRenderType;
 }
 
@@ -16,6 +28,9 @@ export interface ChatToolPayload {
   arguments: string;
   id: string;
   identifier: string;
+  intervention?: ToolIntervention;
+  result_msg_id?: string;
+  thoughtSignature?: string;
   type: LobeToolRenderType;
 }
 
@@ -33,7 +48,9 @@ export interface ChatToolResult {
  * Chat tool payload with merged execution result
  */
 export interface ChatToolPayloadWithResult extends ChatToolPayload {
+  intervention?: ToolIntervention;
   result?: ChatToolResult;
+  result_msg_id?: string;
 }
 
 export interface ToolsCallingContext {
@@ -68,6 +85,7 @@ export interface MessageToolCall {
    */
   id: string;
 
+  thoughtSignature?: string;
   /**
    * The type of the tool. Currently, only `function` is supported.
    */
@@ -85,8 +103,19 @@ export const MessageToolCallSchema = z.object({
   type: z.string(),
 });
 
+export const ChatToolPayloadSchema = z.object({
+  apiName: z.string(),
+  arguments: z.string(),
+  id: z.string(),
+  identifier: z.string(),
+  intervention: ToolInterventionSchema.optional(),
+  result_msg_id: z.string().optional(),
+  thoughtSignature: z.string().optional(),
+  type: z.string(),
+});
+
 /**
- * 聊天消息错误对象
+ * Chat message error object
  */
 export interface ChatMessagePluginError {
   body?: any;

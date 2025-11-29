@@ -8,6 +8,27 @@ const infiniaiChatModels: AIChatModelCard[] = [
       functionCall: true,
       reasoning: true,
     },
+    contextWindowTokens: 200_000,
+    description:
+      'MiniMax-M2 是一款专为编码与智能体工作流优化的专家混合（MoE）语言模型，具有约 230B 总参数与约 10B 活跃参数。它在保持强通用智能的同时，针对多文件编辑、代码-运行-修复闭环、测试校验修复等开发者场景进行深度增强，在终端、IDE 与 CI 等真实环境中表现稳定、高效。',
+    displayName: 'MiniMax M2',
+    enabled: true,
+    id: 'minimax-m2',
+    maxOutput: 200_000,
+    pricing: {
+      currency: 'CNY',
+      units: [
+        { name: 'textInput', rate: 2.1, strategy: 'fixed', unit: 'millionTokens' },
+        { name: 'textOutput', rate: 8.4, strategy: 'fixed', unit: 'millionTokens' },
+      ],
+    },
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: true,
+      reasoning: true,
+    },
     contextWindowTokens: 131_072,
     description: 'GLM-4.6 是智谱AI推出的最新大语言模型，具备更强的推理和生成能力。',
     displayName: 'GLM-4.6',
@@ -32,8 +53,7 @@ const infiniaiChatModels: AIChatModelCard[] = [
       reasoning: true,
     },
     contextWindowTokens: 131_072,
-    description:
-      'DeepSeek-V3.2-Exp 是深度求索推出的实验性大语言模型，具有更强的推理和生成能力。',
+    description: 'DeepSeek-V3.2-Exp 是深度求索推出的实验性大语言模型，具有更强的推理和生成能力。',
     displayName: 'DeepSeek V3.2 Exp',
     enabled: true,
     id: 'deepseek-v3.2-exp',
@@ -237,24 +257,6 @@ const infiniaiChatModels: AIChatModelCard[] = [
       currency: 'CNY',
       units: [
         { name: 'textInput', rate: 0.6, strategy: 'fixed', unit: 'millionTokens' },
-        { name: 'textOutput', rate: 4, strategy: 'fixed', unit: 'millionTokens' },
-      ],
-    },
-    type: 'chat',
-  },
-  {
-    abilities: {
-      vision: true,
-    },
-    contextWindowTokens: 131_072,
-    description: 'Step3 是阶跃星辰推出的多模态模型，具备强大的视觉理解能力。',
-    displayName: 'Step3',
-    id: 'step3',
-    maxOutput: 4096,
-    pricing: {
-      currency: 'CNY',
-      units: [
-        { name: 'textInput', rate: 1.5, strategy: 'fixed', unit: 'millionTokens' },
         { name: 'textOutput', rate: 4, strategy: 'fixed', unit: 'millionTokens' },
       ],
     },
@@ -683,7 +685,8 @@ const infiniaiChatModels: AIChatModelCard[] = [
   },
   {
     contextWindowTokens: 131_072,
-    description: '该模型需要申请体验。GPT-OSS-120B 是 OpenAI 推出的开源大规模语言模型，具备强大的文本生成能力。',
+    description:
+      '该模型需要申请体验。GPT-OSS-120B 是 OpenAI 推出的开源大规模语言模型，具备强大的文本生成能力。',
     displayName: 'GPT-OSS-120B',
     id: 'gpt-oss-120b',
     maxOutput: 32_768,
@@ -698,7 +701,8 @@ const infiniaiChatModels: AIChatModelCard[] = [
   },
   {
     contextWindowTokens: 131_072,
-    description: '该模型需要申请体验。GPT-OSS-20B 是 OpenAI 推出的开源中型语言模型，具备高效的文本生成能力。',
+    description:
+      '该模型需要申请体验。GPT-OSS-20B 是 OpenAI 推出的开源中型语言模型，具备高效的文本生成能力。',
     displayName: 'GPT-OSS-20B',
     id: 'gpt-oss-20b',
     maxOutput: 32_768,

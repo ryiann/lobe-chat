@@ -1,10 +1,11 @@
-import { INBOX_GUIDE_SYSTEMROLE, INBOX_SESSION_ID, isDesktop, isServerMode } from '@lobechat/const';
+import { isDesktop } from '@lobechat/const';
 import {
   ContextEngine,
+  GroupMessageFlattenProcessor,
   HistorySummaryProvider,
   HistoryTruncateProcessor,
-  InboxGuideProvider,
   InputTemplateProcessor,
+  KnowledgeInjector,
   MessageCleanupProcessor,
   MessageContentProcessor,
   PlaceholderVariablesProcessor,
@@ -19,6 +20,8 @@ import { OpenAIChatMessage, UIChatMessage } from '@lobechat/types';
 import { VARIABLE_GENERATORS } from '@lobechat/utils/client';
 
 import { isCanUseFC } from '@/helpers/isCanUseFC';
+import { getAgentStoreState } from '@/store/agent';
+import { agentSelectors } from '@/store/agent/selectors';
 import { getToolStoreState } from '@/store/tool';
 import { toolSelectors } from '@/store/tool/selectors';
 
@@ -29,7 +32,6 @@ interface ContextEngineeringContext {
   historyCount?: number;
   historySummary?: string;
   inputTemplate?: string;
-  isWelcomeQuestion?: boolean;
   messages: UIChatMessage[];
   model: string;
   provider: string;
@@ -48,10 +50,21 @@ export const contextEngineering = async ({
   enableHistoryCount,
   historyCount,
   historySummary,
-  sessionId,
-  isWelcomeQuestion,
 }: ContextEngineeringContext): Promise<OpenAIChatMessage[]> => {
   const toolNameResolver = new ToolNameResolver();
+
+  // Get enabled agent files with content and knowledge bases from agent store
+  const agentStoreState = getAgentStoreState();
+  const agentFiles = agentSelectors.currentAgentFiles(agentStoreState);
+  const agentKnowledgeBases = agentSelectors.currentAgentKnowledgeBases(agentStoreState);
+
+  const fileContents = agentFiles
+    .filter((file) => file.enabled && file.content)
+    .map((file) => ({ content: file.content!, fileId: file.id, filename: file.name }));
+
+  const knowledgeBases = agentKnowledgeBases
+    .filter((kb) => kb.enabled)
+    .map((kb) => ({ description: kb.description, id: kb.id, name: kb.name }));
 
   const pipeline = new ContextEngine({
     pipeline: [
@@ -63,13 +76,8 @@ export const contextEngineering = async ({
       // 2. System role injection (agent's system role)
       new SystemRoleInjector({ systemRole }),
 
-      // 3. Inbox guide system role injection
-      new InboxGuideProvider({
-        inboxGuideSystemRole: INBOX_GUIDE_SYSTEMROLE,
-        inboxSessionId: INBOX_SESSION_ID,
-        isWelcomeQuestion: isWelcomeQuestion,
-        sessionId: sessionId,
-      }),
+      // 3. Knowledge injection (full content for agent files + metadata for knowledge bases)
+      new KnowledgeInjector({ fileContents, knowledgeBases }),
 
       // 4. Tool system role injection
       new ToolSystemRoleProvider({
@@ -89,16 +97,17 @@ export const contextEngineering = async ({
       // Create message processing processors
 
       // 6. Input template processing
-      new InputTemplateProcessor({
-        inputTemplate,
-      }),
+      new InputTemplateProcessor({ inputTemplate }),
 
       // 7. Placeholder variables processing
       new PlaceholderVariablesProcessor({ variableGenerators: VARIABLE_GENERATORS }),
 
-      // 8. Message content processing
+      // 8. Group message flatten (convert role=group to standard assistant + tool messages)
+      new GroupMessageFlattenProcessor(),
+
+      // 8.5 Message content processing
       new MessageContentProcessor({
-        fileContext: { enabled: isServerMode, includeFileUrl: !isDesktop },
+        fileContext: { enabled: true, includeFileUrl: !isDesktop },
         isCanUseVideo,
         isCanUseVision,
         model,

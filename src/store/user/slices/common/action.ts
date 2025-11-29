@@ -24,11 +24,14 @@ const GET_USER_STATE_KEY = 'initUserState';
 export interface CommonAction {
   refreshUserState: () => Promise<void>;
   updateAvatar: (avatar: string) => Promise<void>;
+  updateFullName: (fullName: string) => Promise<void>;
+  updateKeyVaultConfig: (provider: string, config: any) => Promise<void>;
   useCheckTrace: (shouldFetch: boolean) => SWRResponse;
   useInitUserState: (
     isLogin: boolean | undefined,
     serverConfig: GlobalServerConfig,
     options?: {
+      onError?: (error: any) => void;
       onSuccess: (data: UserInitializationState) => void;
     },
   ) => SWRResponse;
@@ -44,10 +47,17 @@ export const createCommonSlice: StateCreator<
     await mutate(GET_USER_STATE_KEY);
   },
   updateAvatar: async (avatar) => {
-    // 1. 更新服务端/数据库中的头像
     await userService.updateAvatar(avatar);
-
     await get().refreshUserState();
+  },
+
+  updateFullName: async (fullName) => {
+    await userService.updateFullName(fullName);
+    await get().refreshUserState();
+  },
+
+  updateKeyVaultConfig: async (provider, config) => {
+    await get().setSettings({ keyVaults: { [provider]: config } });
   },
 
   useCheckTrace: (shouldFetch) =>
@@ -65,12 +75,14 @@ export const createCommonSlice: StateCreator<
         revalidateOnFocus: false,
       },
     ),
-
   useInitUserState: (isLogin, serverConfig, options) =>
     useOnlyFetchOnceSWR<UserInitializationState>(
       !!isLogin ? GET_USER_STATE_KEY : null,
       () => userService.getUserState(),
       {
+        onError: (error) => {
+          options?.onError?.(error);
+        },
         onSuccess: (data) => {
           options?.onSuccess?.(data);
 
@@ -79,7 +91,6 @@ export const createCommonSlice: StateCreator<
             const serverSettings: PartialDeep<UserSettings> = {
               defaultAgent: serverConfig.defaultAgent,
               image: serverConfig.image,
-              languageModel: serverConfig.languageModel,
               systemAgent: serverConfig.systemAgent,
             };
 
@@ -112,7 +123,6 @@ export const createCommonSlice: StateCreator<
                 isUserHasConversation: data.hasConversation,
                 isUserStateInit: true,
                 preference,
-                serverLanguageModel: serverConfig.languageModel,
                 settings: data.settings || {},
                 subscriptionPlan: data.subscriptionPlan,
                 user,
@@ -128,7 +138,6 @@ export const createCommonSlice: StateCreator<
               lastName: data.lastName,
               username: data.username,
             });
-            get().refreshDefaultModelProviderList({ trigger: 'fetchUserState' });
           }
         },
       },

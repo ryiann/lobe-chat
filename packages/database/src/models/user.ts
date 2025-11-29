@@ -1,8 +1,13 @@
-import { UserGuide, UserKeyVaults, UserPreference, UserSettings } from '@lobechat/types';
+import {
+  SSOProvider,
+  UserGuide,
+  UserKeyVaults,
+  UserPreference,
+  UserSettings,
+} from '@lobechat/types';
 import { TRPCError } from '@trpc/server';
 import dayjs from 'dayjs';
 import { eq } from 'drizzle-orm';
-import type { AdapterAccount } from 'next-auth/adapters';
 import type { PartialDeep } from 'type-fest';
 
 import { merge } from '@/utils/merge';
@@ -82,7 +87,8 @@ export class UserModel {
       })
       .from(users)
       .where(eq(users.id, this.userId))
-      .leftJoin(userSettings, eq(users.id, userSettings.id));
+      .leftJoin(userSettings, eq(users.id, userSettings.id))
+      .limit(1);
 
     if (!result || !result[0]) {
       throw new UserNotFoundError();
@@ -125,19 +131,15 @@ export class UserModel {
     };
   };
 
-  getUserSSOProviders = async () => {
-    const result = await this.db
+  getUserSSOProviders = async (): Promise<SSOProvider[]> => {
+    return this.db
       .select({
         expiresAt: nextauthAccounts.expires_at,
         provider: nextauthAccounts.provider,
         providerAccountId: nextauthAccounts.providerAccountId,
-        scope: nextauthAccounts.scope,
-        type: nextauthAccounts.type,
-        userId: nextauthAccounts.userId,
       })
       .from(nextauthAccounts)
       .where(eq(nextauthAccounts.userId, this.userId));
-    return result as unknown as AdapterAccount[];
   };
 
   getUserSettings = async () => {

@@ -1,4 +1,3 @@
-import { enableNextAuth } from '@/const/auth';
 import { isDesktop } from '@/const/version';
 import { appEnv, getAppConfig } from '@/envs/app';
 import { authEnv } from '@/envs/auth';
@@ -6,14 +5,22 @@ import { fileEnv } from '@/envs/file';
 import { imageEnv } from '@/envs/image';
 import { knowledgeEnv } from '@/envs/knowledge';
 import { langfuseEnv } from '@/envs/langfuse';
+import { parseSSOProviders } from '@/libs/better-auth/utils/server';
 import { parseSystemAgent } from '@/server/globalConfig/parseSystemAgent';
 import { GlobalServerConfig } from '@/types/serverConfig';
 import { cleanObject } from '@/utils/object';
 
-import { genServerLLMConfig } from './_deprecated';
 import { genServerAiProvidersConfig } from './genServerAiProviderConfig';
 import { parseAgentConfig } from './parseDefaultAgent';
 import { parseFilesConfig } from './parseFilesConfig';
+
+/**
+ * Get Better-Auth SSO providers list
+ * Parses AUTH_SSO_PROVIDERS and returns enabled providers
+ */
+const getBetterAuthSSOProviders = () => {
+  return parseSSOProviders(authEnv.AUTH_SSO_PROVIDERS);
+};
 
 export const getServerGlobalConfig = async () => {
   const { ACCESS_CODES, DEFAULT_AGENT_CONFIG } = getAppConfig();
@@ -62,31 +69,12 @@ export const getServerGlobalConfig = async () => {
     enableUploadFileToServer: !!fileEnv.S3_SECRET_ACCESS_KEY,
     enabledAccessCode: ACCESS_CODES?.length > 0,
 
-    enabledOAuthSSO: enableNextAuth,
     image: cleanObject({
       defaultImageNum: imageEnv.AI_IMAGE_DEFAULT_IMAGE_NUM,
     }),
-    /**
-     * @deprecated
-     */
-    languageModel: genServerLLMConfig({
-      azure: {
-        enabledKey: 'ENABLED_AZURE_OPENAI',
-        withDeploymentName: true,
-      },
-      bedrock: {
-        enabledKey: 'ENABLED_AWS_BEDROCK',
-        modelListKey: 'AWS_BEDROCK_MODEL_LIST',
-      },
-      giteeai: {
-        enabledKey: 'ENABLED_GITEE_AI',
-        modelListKey: 'GITEE_AI_MODEL_LIST',
-      },
-      ollama: {
-        fetchOnClient: !process.env.OLLAMA_PROXY_URL,
-      },
-    }),
-    oAuthSSOProviders: authEnv.NEXT_AUTH_SSO_PROVIDERS.trim().split(/[,，]/),
+    oAuthSSOProviders: authEnv.NEXT_PUBLIC_ENABLE_BETTER_AUTH
+      ? getBetterAuthSSOProviders()
+      : authEnv.NEXT_AUTH_SSO_PROVIDERS.trim().split(/[,，]/),
     systemAgent: parseSystemAgent(appEnv.SYSTEM_AGENT),
     telemetry: {
       langfuse: langfuseEnv.ENABLE_LANGFUSE,

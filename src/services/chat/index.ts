@@ -1,3 +1,9 @@
+import {
+  FetchSSEOptions,
+  fetchSSE,
+  getMessageError,
+  standardizeAnimationStyle,
+} from '@lobechat/fetch-sse';
 import { AgentRuntimeError, ChatCompletionErrorPayload } from '@lobechat/model-runtime';
 import { ChatErrorType, TracePayload, TraceTagMap, UIChatMessage } from '@lobechat/types';
 import { PluginRequestPayload, createHeadersWithPluginSettings } from '@lobehub/chat-plugin-sdk';
@@ -8,7 +14,7 @@ import { enableAuth } from '@/const/auth';
 import { DEFAULT_AGENT_CONFIG } from '@/const/settings';
 import { isDesktop } from '@/const/version';
 import { getSearchConfig } from '@/helpers/getSearchConfig';
-import { createChatToolsEngine, createToolsEngine } from '@/helpers/toolEngineering';
+import { createAgentToolsEngine, createToolsEngine } from '@/helpers/toolEngineering';
 import { getAgentStoreState } from '@/store/agent';
 import { agentChatConfigSelectors, agentSelectors } from '@/store/agent/selectors';
 import { aiModelSelectors, aiProviderSelectors, getAiInfraStoreState } from '@/store/aiInfra';
@@ -25,12 +31,6 @@ import {
 import type { ChatStreamPayload, OpenAIChatMessage } from '@/types/openai/chat';
 import { fetchWithInvokeStream } from '@/utils/electron/desktopRemoteRPCFetch';
 import { createErrorResponse } from '@/utils/errorResponse';
-import {
-  FetchSSEOptions,
-  fetchSSE,
-  getMessageError,
-  standardizeAnimationStyle,
-} from '@/utils/fetch';
 import { createTraceHeader, getTraceId } from '@/utils/trace';
 
 import { createHeaderWithAuth } from '../_auth';
@@ -52,12 +52,12 @@ interface FetchAITaskResultParams extends FetchSSEOptions {
   abortController?: AbortController;
   onError?: (e: Error, rawError?: any) => void;
   /**
-   * 加载状态变化处理函数
-   * @param loading - 是否处于加载状态
+   * Loading state change handler function
+   * @param loading - Whether in loading state
    */
   onLoadingChange?: (loading: boolean) => void;
   /**
-   * 请求对象
+   * Request object
    */
   params: ChatStreamInputParams;
   trace?: TracePayload;
@@ -66,7 +66,6 @@ interface FetchAITaskResultParams extends FetchSSEOptions {
 interface CreateAssistantMessageStream extends FetchSSEOptions {
   abortController?: AbortController;
   historySummary?: string;
-  isWelcomeQuestion?: boolean;
   params: GetChatCompletionPayload;
   trace?: TracePayload;
 }
@@ -91,7 +90,7 @@ class ChatService {
 
     const pluginIds = [...(enabledPlugins || [])];
 
-    const toolsEngine = createChatToolsEngine({
+    const toolsEngine = createAgentToolsEngine({
       model: payload.model,
       provider: payload.provider!,
     });
@@ -113,9 +112,7 @@ class ChatService {
       enableHistoryCount: agentChatConfigSelectors.enableHistoryCount(agentStoreState),
       // include user messages
       historyCount: agentChatConfigSelectors.historyCount(agentStoreState) + 2,
-      historySummary: options?.historySummary,
       inputTemplate: chatConfig.inputTemplate,
-      isWelcomeQuestion: options?.isWelcomeQuestion,
       messages,
       model: payload.model,
       provider: payload.provider!,
@@ -177,6 +174,13 @@ class ChatService {
         extendParams.reasoning_effort = chatConfig.gpt5ReasoningEffort;
       }
 
+      if (
+        modelExtendParams!.includes('gpt5_1ReasoningEffort') &&
+        chatConfig.gpt5_1ReasoningEffort
+      ) {
+        extendParams.reasoning_effort = chatConfig.gpt5_1ReasoningEffort;
+      }
+
       if (modelExtendParams!.includes('textVerbosity') && chatConfig.textVerbosity) {
         extendParams.verbosity = chatConfig.textVerbosity;
       }
@@ -192,8 +196,20 @@ class ChatService {
         extendParams.thinkingBudget = chatConfig.thinkingBudget;
       }
 
+      if (modelExtendParams!.includes('thinkingLevel') && chatConfig.thinkingLevel) {
+        extendParams.thinkingLevel = chatConfig.thinkingLevel;
+      }
+
       if (modelExtendParams!.includes('urlContext') && chatConfig.urlContext) {
         extendParams.urlContext = chatConfig.urlContext;
+      }
+
+      if (modelExtendParams!.includes('imageAspectRatio') && chatConfig.imageAspectRatio) {
+        extendParams.imageAspectRatio = chatConfig.imageAspectRatio;
+      }
+
+      if (modelExtendParams!.includes('imageResolution') && chatConfig.imageResolution) {
+        extendParams.imageResolution = chatConfig.imageResolution;
       }
     }
 
@@ -217,12 +233,10 @@ class ChatService {
     onErrorHandle,
     onFinish,
     trace,
-    isWelcomeQuestion,
     historySummary,
   }: CreateAssistantMessageStream) => {
     await this.createAssistantMessage(params, {
       historySummary,
-      isWelcomeQuestion,
       onAbort,
       onErrorHandle,
       onFinish,
@@ -404,7 +418,7 @@ class ChatService {
     onLoadingChange?.(true);
 
     try {
-      const oaiMessages = await contextEngineering({
+      const llmMessages = await contextEngineering({
         messages: params.messages as any,
         model: params.model!,
         provider: params.provider!,
@@ -421,7 +435,7 @@ class ChatService {
       // remove plugins
       delete params.plugins;
       await this.getChatCompletion(
-        { ...params, messages: oaiMessages, tools },
+        { ...params, messages: llmMessages, tools },
         {
           onErrorHandle: (error) => {
             errorHandle(new Error(error.message), error);
